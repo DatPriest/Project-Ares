@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AbilityUpgrade" load_steps=2 format=3 uid="uid://bcy8fglnmdtnn"]
+
+[ext_resource type="Script" path="res://resources/upgrades/ability_upgrade.gd" id="1_24vvb"]
+
+[resource]
+script = ExtResource("1_24vvb")
+id = "double_sword_rate"
+max_quantity = 0
+name = "Double Sword Damage"
+description = "Increases Double Sword Attack Rate by 10%"

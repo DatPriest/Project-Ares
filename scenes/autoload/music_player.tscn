@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://c25neeijnqfjb"]
+
+[ext_resource type="AudioStream" uid="uid://dc7fpectt1onb" path="res://assets/audio/ui/Polsaris_-_Sounds_of_Progressiv_intro.mp3" id="1_itm1m"]
+[ext_resource type="Script" path="res://scenes/autoload/music_player.gd" id="2_vo7dl"]
+
+[node name="MusicPlayer" type="AudioStreamPlayer"]
+process_mode = 3
+stream = ExtResource("1_itm1m")
+volume_db = -10.0
+autoplay = true
+bus = &"Music"
+script = ExtResource("2_vo7dl")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 15.0
+one_shot = true

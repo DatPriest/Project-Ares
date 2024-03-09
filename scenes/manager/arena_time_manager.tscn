@@ -30,6 +30,7 @@ func get_time_elapsed():
 func on_timer_timeout():
 	var victory_screen_instance = end_screen_scene.instantiate()
 	add_child(victory_screen_instance)
+	victory_screen_instance.play_jingle()
 "
 
 [node name="ArenaTimeManager" type="Node"]
@@ -37,6 +38,6 @@ script = SubResource("GDScript_ttasp")
 end_screen_scene = ExtResource("1_2iqm2")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 600.0
+wait_time = 1200.0
 one_shot = true
 autostart = true

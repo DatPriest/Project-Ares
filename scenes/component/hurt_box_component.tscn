@@ -1,13 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dbf1mn3s1wi5q"]
+[gd_scene load_steps=2 format=3 uid="uid://dbf1mn3s1wi5q"]
 
 [ext_resource type="Script" path="res://scenes/component/hurt_box_component.gd" id="1_gem07"]
-[ext_resource type="Script" path="res://scenes/component/health_component.gd" id="2_y1mc2"]
 
-[node name="HurtBoxComponent" type="Area2D" node_paths=PackedStringArray("health_component")]
+[node name="HurtBoxComponent" type="Area2D"]
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("1_gem07")
-health_component = NodePath("HealthComponent")
-
-[node name="HealthComponent" type="Node" parent="."]
-script = ExtResource("2_y1mc2")

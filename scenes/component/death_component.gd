@@ -2,6 +2,7 @@ extends Node2D
 
 @export var health_component: Node
 @export var sprite: Sprite2D
+@onready var hit_random_audio_player_component = $HitRandomAudioPlayerComponent
 
 
 func _ready():
@@ -20,3 +21,4 @@ func on_died():
 	
 	global_position = spawn_position
 	$AnimationPlayer.play("default")
+	hit_random_audio_player_component.play_random()

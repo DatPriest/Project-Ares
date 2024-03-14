@@ -4,3 +4,8 @@
 ./exe/game.zip
 ./exe/game.exe
 ./exe/game.pck
+.vs
+.vs/*
+./build
+/build/release/*
+/build/debug/*

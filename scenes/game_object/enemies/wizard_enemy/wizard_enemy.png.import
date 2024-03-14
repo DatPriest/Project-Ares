@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://tw1t3nfy2cc4"
-path="res://.godot/imported/goblin.png-8e1e9b369faf343e869a04feafbb836d.ctex"
+uid="uid://bklkqg3662m8r"
+path="res://.godot/imported/wizard_enemy.png-18f605c2c5d6689d1963e769ebc42289.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/game_object/goblin_enemy/goblin.png"
-dest_files=["res://.godot/imported/goblin.png-8e1e9b369faf343e869a04feafbb836d.ctex"]
+source_file="res://scenes/game_object/enemies/wizard_enemy/wizard_enemy.png"
+dest_files=["res://.godot/imported/wizard_enemy.png-18f605c2c5d6689d1963e769ebc42289.ctex"]
 
 [params]
 

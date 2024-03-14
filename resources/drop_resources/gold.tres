@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="DropMaterials" load_steps=2 format=3 uid="uid://brbckfckfg0sf"]
+
+[ext_resource type="Script" path="res://resources/drop_resources/drop_resource.gd" id="1_wgdfo"]
+
+[resource]
+script = ExtResource("1_wgdfo")
+id = "gold"
+drop_chance = 0.01
+title = "Gold "
+description = "The basic material of all weapons"

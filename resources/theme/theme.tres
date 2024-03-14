@@ -1,13 +1,22 @@
-[gd_resource type="Theme" load_steps=15 format=3 uid="uid://c3gvva540llku"]
+[gd_resource type="Theme" load_steps=22 format=3 uid="uid://c3gvva540llku"]
 
 [ext_resource type="FontFile" uid="uid://d4kf2lb4wbwa5" path="res://resources/theme/Rockboxcond12.ttf" id="1_5eefh"]
 [ext_resource type="Texture2D" uid="uid://b6ha1oibh56hb" path="res://assets/ui/ui.png" id="1_d87jn"]
+[ext_resource type="Texture2D" uid="uid://dcsfvyrhkupvn" path="res://assets/ui/panelContainer.png" id="2_mxnch"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_a8fwv"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
 content_margin_bottom = 4.0
+texture = ExtResource("1_d87jn")
+texture_margin_left = 1.0
+texture_margin_top = 1.0
+texture_margin_right = 1.0
+texture_margin_bottom = 1.0
+region_rect = Rect2(18, 2, 12, 12)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_d41hn"]
 texture = ExtResource("1_d87jn")
 texture_margin_left = 1.0
 texture_margin_top = 1.0
@@ -40,6 +49,13 @@ texture_margin_top = 3.0
 texture_margin_right = 3.0
 texture_margin_bottom = 3.0
 region_rect = Rect2(4, 20, 8, 8)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_06qtb"]
+texture = ExtResource("2_mxnch")
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_7ba0o"]
 size = Vector2(0, 0)
@@ -91,6 +107,42 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0.8, 0.8, 0.8, 0)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fg3lt"]
+bg_color = Color(0.996078, 0.682353, 0.203922, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_psuim"]
+bg_color = Color(0.996078, 0.682353, 0.203922, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oxlkc"]
+bg_color = Color(0.996078, 0.682353, 0.203922, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0wsvm"]
+content_margin_left = 4.0
+content_margin_top = 0.0
+content_margin_right = 3.0
+content_margin_bottom = 0.0
+bg_color = Color(0.152941, 0.152941, 0.152941, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.8, 0.8, 0.8, 0)
+
 [resource]
 default_font = ExtResource("1_5eefh")
 default_font_size = 16
@@ -103,13 +155,17 @@ BlueOutlineLabel/constants/outline_size = 8
 BlueOutlineLabel/constants/shadow_offset_x = 0
 BlueOutlineLabel/constants/shadow_offset_y = 0
 Button/colors/font_color = Color(0.247059, 0.14902, 0.192157, 1)
+Button/colors/font_disabled_color = Color(0.545098, 0.607843, 0.705882, 1)
 Button/colors/font_focus_color = Color(0.247059, 0.14902, 0.192157, 1)
 Button/colors/font_hover_color = Color(0.741176, 0.423529, 0.290196, 1)
 Button/colors/font_pressed_color = Color(0.247059, 0.14902, 0.192157, 1)
+Button/styles/disabled = SubResource("StyleBoxTexture_d41hn")
 Button/styles/focus = SubResource("StyleBoxEmpty_5ij5i")
 Button/styles/hover = SubResource("StyleBoxTexture_q8h0w")
 Button/styles/normal = SubResource("StyleBoxTexture_3uyih")
 Button/styles/pressed = SubResource("StyleBoxTexture_4xa7x")
+CraftingPanelContainer/base_type = &"PanelContainer"
+CraftingPanelContainer/styles/panel = SubResource("StyleBoxTexture_06qtb")
 HSlider/icons/grabber = SubResource("PlaceholderTexture2D_7ba0o")
 HSlider/icons/grabber_highlight = SubResource("PlaceholderTexture2D_gxhyo")
 HSlider/styles/grabber_area = SubResource("StyleBoxFlat_5dvcd")
@@ -125,3 +181,7 @@ Label/constants/shadow_offset_y = 1
 Label/constants/shadow_outline_size = 1
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_6pnph")
 ProgressBar/styles/background = SubResource("StyleBoxFlat_r5yrs")
+VScrollBar/styles/grabber = SubResource("StyleBoxFlat_fg3lt")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_psuim")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_oxlkc")
+VScrollBar/styles/scroll = SubResource("StyleBoxFlat_0wsvm")

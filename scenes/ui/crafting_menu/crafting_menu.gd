@@ -6,16 +6,11 @@ extends CanvasLayer
 @onready var quit_button = %QuitButton
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
-var options_menu_scene = preload("res://scenes/ui/options_menu.tscn")
 var is_closing: bool
 
 func _ready():
 	get_tree().paused = true
 	panel_container.pivot_offset = panel_container.size / 2
-	
-	resume_button.pressed.connect(on_resumed_pressed)
-	options_button.pressed.connect(on_options_pressed)
-	quit_button.pressed.connect(on_quit_pressed)
 	
 	animation_player.play("default")
 	
@@ -42,23 +37,16 @@ func close():
 	queue_free()
 
 func _unhandled_input(event):
+	handle_inventory(event)
+	handle_escape(event)
+
+
+func handle_inventory(event):
+	if event.is_action_pressed("inventory") && !is_closing:
+		close()
+		get_tree().root.set_input_as_handled()
+		
+func handle_escape(event):
 	if event.is_action_pressed("Escape") && !is_closing:
 		close()
 		get_tree().root.set_input_as_handled()
-
-func on_resumed_pressed():
-	close()
-	
-func on_options_pressed():
-	ScreenTransition.transition()
-	await ScreenTransition.transitioned_halfway
-	var options_menu_instance = options_menu_scene.instantiate()
-	add_child(options_menu_instance)
-	options_menu_instance.back_pressed.connect(on_options_back_pressed.bind(options_menu_instance))
-	
-func on_quit_pressed():
-	get_tree().paused = false
-	get_tree().change_scene_to_file("res://scenes/ui/main_menu/main_menu.tscn")
-
-func on_options_back_pressed(options_menu: Node):
-	options_menu.queue_free()	

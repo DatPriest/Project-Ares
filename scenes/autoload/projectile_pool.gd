@@ -2,6 +2,7 @@ extends Node
 
 # Projectile pool sizes - configurable for performance tuning
 const ARROW_POOL_SIZE: int = 50
+const DEBUG_STATS_INTERVAL: float = 30.0  # Print stats every 30 seconds
 
 # Pool containers
 var arrow_pool: Array[Arrow] = []
@@ -14,6 +15,9 @@ var arrow_scene: PackedScene = preload("res://scenes/game_object/projectiles/arr
 var total_arrows_created: int = 0
 var total_arrows_reused: int = 0
 
+# Debug timer
+var debug_timer: Timer
+
 func _ready() -> void:
 	# Pre-populate arrow pool
 	for i in ARROW_POOL_SIZE:
@@ -25,6 +29,16 @@ func _ready() -> void:
 		total_arrows_created += 1
 	
 	print("ProjectilePool initialized with %d arrows" % ARROW_POOL_SIZE)
+	
+	# Setup debug timer
+	debug_timer = Timer.new()
+	debug_timer.wait_time = DEBUG_STATS_INTERVAL
+	debug_timer.timeout.connect(_on_debug_timer_timeout)
+	debug_timer.autostart = true
+	add_child(debug_timer)
+
+func _on_debug_timer_timeout() -> void:
+	print_pool_stats()
 
 func get_arrow() -> Arrow:
 	var arrow: Arrow
@@ -91,6 +105,9 @@ func print_pool_stats() -> void:
 
 func _exit_tree() -> void:
 	print_pool_stats()
+	# Clean up debug timer
+	if debug_timer:
+		debug_timer.queue_free()
 	# Clean up all arrows
 	for arrow in arrow_pool:
 		if is_instance_valid(arrow):

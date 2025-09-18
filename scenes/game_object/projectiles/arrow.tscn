@@ -21,4 +21,4 @@ shape = SubResource("RectangleShape2D_arrow")
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
 rect = Rect2(-10, -10, 20, 20)
 
-[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="queue_free"]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_screen_exited"]

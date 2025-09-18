@@ -67,7 +67,7 @@ func validate_meta_upgrades():
 	dir.list_dir_end()
 	
 	if resource_paths.size() == 0:
-		print("[MetaProgression] No MetaUpgrade resources found to validate.")
+		push_warning("[MetaProgression] No MetaUpgrade resources found to validate.")
 		return
 	
 	# Load and validate each MetaUpgrade resource

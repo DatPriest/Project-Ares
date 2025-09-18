@@ -57,14 +57,11 @@ func validate_meta_upgrades():
 		push_warning("[MetaProgression] Could not access meta_upgrades directory!")
 		return
 		
-	dir.list_dir_begin()
-	var file_name = dir.get_next()
-	while file_name != "":
+	var files = dir.get_files()
+	for file_name in files:
 		if file_name.ends_with(".tres"):
 			var resource_path = "res://resources/meta_upgrades/" + file_name
 			resource_paths.append(resource_path)
-		file_name = dir.get_next()
-	dir.list_dir_end()
 	
 	if resource_paths.size() == 0:
 		push_warning("[MetaProgression] No MetaUpgrade resources found to validate.")

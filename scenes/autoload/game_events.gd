@@ -30,6 +30,11 @@ signal ability_spawn_requested(ability_scene: PackedScene, position: Vector2, da
 signal entities_layer_ready(entities_layer: Node)
 signal foreground_layer_ready(foreground_layer: Node)
 
+# Multiplayer and Steam events
+signal lobbies_found(lobby_list: Array)
+signal player_spawned(player_data: Dictionary)
+signal player_despawned(player_id: int)
+
 func emit_experience_vial_collected(number: float):
 	experience_vial_collected.emit(number)
 	
@@ -91,3 +96,13 @@ func emit_boss_special_attack_started(boss_data: EnemyData, attack_name: String)
 
 func emit_boss_health_changed(boss_data: EnemyData, current_health: float, max_health: float):
 	boss_health_changed.emit(boss_data, current_health, max_health)
+
+# Multiplayer event emitters
+func emit_lobbies_found(lobby_list: Array):
+	lobbies_found.emit(lobby_list)
+
+func emit_player_spawned(player_data: Dictionary):
+	player_spawned.emit(player_data)
+
+func emit_player_despawned(player_id: int):
+	player_despawned.emit(player_id)

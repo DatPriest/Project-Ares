@@ -70,7 +70,7 @@ Exportiere Variablen mit `@export`, um sie im Godot-Editor sichtbar und konfigur
 @export var bullet_scene: PackedScene
 ```
 
-## 3\. Architektur & Design-Patterns
+## 3. Architektur & Design-Patterns
 
 ### 3.1. Komponentenbasierte Architektur
 

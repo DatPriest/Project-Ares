@@ -55,6 +55,7 @@ func set_ability_upgrade(upgrade: AbilityUpgrade):
 		var damage_increase_per_level = 0.1  # Default 10%
 		if upgrade.id == "sword_damage":
 			damage_increase_per_level = 0.15  # Sword damage increases by 15%
+		# axe_damage, double_sword_damage use default 10%
 		
 		var current_multiplier = 1 + (current_quantity * damage_increase_per_level)
 		var new_multiplier = 1 + ((current_quantity + 1) * damage_increase_per_level)

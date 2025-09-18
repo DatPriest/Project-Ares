@@ -1,0 +1,48 @@
+[gd_resource type="Resource" script_class="WaveResource" load_steps=7 format=3 uid="uid://bmn7d8q6xpfg0"]
+
+[ext_resource type="Script" path="res://resources/wave_resources/wave_resource.gd" id="1_xg7kn"]
+[ext_resource type="Script" path="res://resources/wave_resources/enemy_spawn_data.gd" id="2_vj3m4"]
+[ext_resource type="PackedScene" uid="uid://xqnkguyw81is" path="res://scenes/game_object/enemies/basic_enemy/basic_enemy.tscn" id="3_rtm4b"]
+[ext_resource type="PackedScene" uid="uid://cuod48cesmd47" path="res://scenes/game_object/enemies/goblin_enemy/goblin_enemy.tscn" id="4_f7d2v"]
+[ext_resource type="PackedScene" uid="uid://dw1t3nfy2cc5c" path="res://scenes/game_object/enemies/goblin_archer/goblin_archer.tscn" id="5_k8j9l"]
+[ext_resource type="PackedScene" uid="uid://c8jmdu8ad3xu7" path="res://scenes/game_object/enemies/wizard_enemy/wizard_enemy.tscn" id="6_3vn2k"]
+
+[sub_resource type="Resource" id="Resource_1"]
+script = ExtResource("2_vj3m4")
+enemy_scene = ExtResource("3_rtm4b")
+weight = 10
+min_difficulty = 0
+max_difficulty = -1
+
+[sub_resource type="Resource" id="Resource_2"]
+script = ExtResource("2_vj3m4")
+enemy_scene = ExtResource("4_f7d2v")
+weight = 30
+min_difficulty = 4
+max_difficulty = -1
+
+[sub_resource type="Resource" id="Resource_3"]
+script = ExtResource("2_vj3m4")
+enemy_scene = ExtResource("5_k8j9l")
+weight = 25
+min_difficulty = 5
+max_difficulty = -1
+
+[sub_resource type="Resource" id="Resource_4"]
+script = ExtResource("2_vj3m4")
+enemy_scene = ExtResource("6_3vn2k")
+weight = 20
+min_difficulty = 6
+max_difficulty = -1
+
+[resource]
+script = ExtResource("1_xg7kn")
+id = "advanced_wave"
+name = "Advanced Wave"
+description = "Full enemy roster with all types"
+start_time = 0.0
+duration = -1.0
+base_spawn_interval = 2.0
+spawn_interval_scaling = 0.95
+min_spawn_interval = 0.1
+enemy_types = Array[EnemySpawnData]([SubResource("Resource_1"), SubResource("Resource_2"), SubResource("Resource_3"), SubResource("Resource_4")])

@@ -27,6 +27,10 @@ func _ready():
 	upgrade_pool.add_item(upgrade_player_speed, 5)
 	upgrade_pool.add_item(upgrade_double_sword, 5)
 	
+	if experience_manager == null:
+		push_error("UpgradeManager: experience_manager is null, level-up upgrades will not work")
+		return
+		
 	experience_manager.level_up.connect(on_level_up)
 
 
@@ -61,19 +65,33 @@ func on_upgrade_selected(upgrade: AbilityUpgrade):
 
 func pick_upgrades():
 	var chosen_upgrades: Array[AbilityUpgrade] = []
-	for i in 3:
+	var max_choices = min(3, upgrade_pool.items.size())
+	
+	for i in max_choices:
 		if upgrade_pool.items.size() == chosen_upgrades.size():
 			break
 		var chosen_upgrade = upgrade_pool.pick_item(chosen_upgrades)
-		chosen_upgrades.append(chosen_upgrade)
+		if chosen_upgrade != null:
+			chosen_upgrades.append(chosen_upgrade)
+		else:
+			break
 		
 	return chosen_upgrades
 	
 
 func on_level_up(current_level: int):
+	if upgrade_screen_scene == null:
+		push_warning("UpgradeManager: upgrade_screen_scene is null, cannot show upgrade screen")
+		return
+		
+	var chosen_upgrades = pick_upgrades()
+	if chosen_upgrades.size() == 0:
+		push_warning("UpgradeManager: No upgrades available to show - all upgrades may be maxed out")
+		# Could show a different screen or message here, but for now just continue
+		return
+		
 	var upgrade_screen_instance = upgrade_screen_scene.instantiate()
 	add_child(upgrade_screen_instance)
-	var chosen_upgrades = pick_upgrades()
 	upgrade_screen_instance.set_ability_upgrades(chosen_upgrades as Array[AbilityUpgrade])
 	upgrade_screen_instance.upgrade_selected.connect(on_upgrade_selected)
 	

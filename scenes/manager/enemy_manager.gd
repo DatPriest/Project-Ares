@@ -20,20 +20,11 @@ var base_spawn_time = 0
 var enemy_table = WeightedTable.new()
 
 func _ready():
+	# Enemy table initialization and timer setup
 	enemy_table.add_item(basic_enemy_data, 10)
 	base_spawn_time = timer.wait_time
 	timer.timeout.connect(on_timer_timeout)
 	arena_time_manager.arena_difficulty_increased.connect(on_arena_difficulty_increased)
-
-# Wave resources to load - can be configured in the editor
-@export var wave_resources: Array[WaveResource] = [
-	preload("res://resources/wave_resources/advanced_wave.tres")
-]
-
-@onready var wave_spawner: WaveSpawner
-
-
-func _ready() -> void:
 	# Create and configure wave spawner
 	wave_spawner = wave_spawner_scene.instantiate()
 	add_child(wave_spawner)

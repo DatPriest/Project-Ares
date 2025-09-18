@@ -95,9 +95,14 @@ Du möchtest bei der Entwicklung helfen? Großartig\!
 
 1.  **Klone das Repository:**
     ```bash
-    git clone https://github.com/DEIN_BENUTZERNAME/project-ares.git
+    git clone https://github.com/DatPriest/Project-Ares.git
     ```
 2.  **Öffne das Projekt** in der Godot Engine (Version 4.2 oder neuer).
-3.  **Lese die Anweisungen für Mitwirkende:** Bevor du Code schreibst, wirf einen Blick in unsere `.github/copilot/instructions.md`, um dich mit unseren Code-Standards und der Projektarchitektur vertraut zu machen.
+3.  **Lese die Entwickler-Dokumentation:** Bevor du Code schreibst, lies unseren [**Developer Onboarding Guide**](docs/contributing.md) für eine umfassende Einführung in Projektarchitektur, Komponenten-System und Code-Standards.
+
+**Wichtige Ressourcen für Mitwirkende:**
+- 📖 [Contributing Guide](docs/contributing.md) - Vollständige Entwickler-Dokumentation
+- 🤖 [Copilot Instructions](.github/copilot-instructions.md) - KI-Coding-Standards 
+- 🧪 [DPS Testing System](scenes/test/dps_benchmark/README.md) - Ability-Testing und Balance
 
 Wir freuen uns über Pull Requests und Issue-Reports\!

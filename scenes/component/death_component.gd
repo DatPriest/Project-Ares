@@ -27,8 +27,10 @@ func on_died():
 	else:
 		# Fallback to the original method if entities layer not available
 		var entities = get_tree().get_first_node_in_group("entities_layer")
-		entities.add_child(self)
-	
+		if entities != null:
+			entities.add_child(self)
+		else:
+			push_warning("No node found in 'entities_layer' group. Death component could not be reparented.")
 	global_position = spawn_position
 	$AnimationPlayer.play("default")
 	hit_random_audio_player_component.play_random()

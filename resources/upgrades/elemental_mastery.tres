@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AbilityUpgrade" load_steps=2 format=3 uid="uid://m8i7j6k5n4o3p"]
+
+[ext_resource type="Script" path="res://resources/upgrades/ability_upgrade.gd" id="1_3ohl5"]
+
+[resource]
+script = ExtResource("1_3ohl5")
+id = "elemental_mastery"
+max_quantity = 1
+name = "Elemental Mastery"
+description = "Master all elements: All abilities gain +25% damage (Requires all 3 weapon types)"

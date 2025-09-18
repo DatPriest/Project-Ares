@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://o0k9l8m7p6q5r"]
+
+[ext_resource type="Script" path="res://scenes/ability/shield_ability/shield_orb.gd" id="1_shield_orb_script"]
+[ext_resource type="PackedScene" uid="uid://jl0i6b85oyql" path="res://scenes/component/hitbox_component.tscn" id="2_hitbox"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
+radius = 15.0
+
+[node name="ShieldOrb" type="Node2D"]
+script = ExtResource("1_shield_orb_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.7, 0.9, 1, 1)
+scale = Vector2(30, 30)
+
+[node name="HitboxComponent" parent="." instance=ExtResource("2_hitbox")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+shape = SubResource("CircleShape2D_1")

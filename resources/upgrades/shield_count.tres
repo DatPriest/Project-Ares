@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AbilityUpgrade" load_steps=2 format=3 uid="uid://l7h6i5j4m3n2o"]
+
+[ext_resource type="Script" path="res://resources/upgrades/ability_upgrade.gd" id="1_3ohl5"]
+
+[resource]
+script = ExtResource("1_3ohl5")
+id = "shield_count"
+max_quantity = 3
+name = "Additional Orbs"
+description = "Adds one more orbiting shield orb"

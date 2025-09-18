@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://p1l0m9n8q7r6s"]
+
+[ext_resource type="Script" path="res://scenes/ability/shield_ability_controller/shield_ability_controller.gd" id="1_shield_controller"]
+[ext_resource type="PackedScene" uid="uid://o0k9l8m7p6q5r" path="res://scenes/ability/shield_ability/shield_orb.tscn" id="2_shield_orb_scene"]
+
+[node name="ShieldAbilityController" type="Node"]
+script = ExtResource("1_shield_controller")
+shield_orb_scene = ExtResource("2_shield_orb_scene")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.0
+autostart = true

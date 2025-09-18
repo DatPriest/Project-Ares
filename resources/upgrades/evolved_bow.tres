@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="StrategicUpgrade" load_steps=2 format=3 uid="uid://n9j8k7l6o5p4q"]
+
+[ext_resource type="Script" path="res://resources/upgrades/strategic_upgrade.gd" id="1_strategic"]
+
+[resource]
+script = ExtResource("1_strategic")
+prerequisite_upgrades = Array[String](["bow", "bow_damage", "bow_multishot"])
+minimum_level = 8
+requires_multiplayer = false
+mutually_exclusive_with = Array[String]([])
+id = "evolved_bow"
+max_quantity = 1
+name = "Evolved Bow: Storm Bow"
+description = "Bow evolution: Arrows pierce enemies and create lightning chains"

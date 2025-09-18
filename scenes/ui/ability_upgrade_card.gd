@@ -96,28 +96,30 @@ func set_ability_upgrade(upgrade: AbilityUpgrade) -> void:
 	
 	description_label.text = enhanced_description
 
+func _get_stats_for_upgrade(upgrade_id: String) -> AbilityStats:
+	match upgrade_id:
+		"axe_damage", "axe_rate":
+			return preload("res://resources/upgrades/axe_stats.tres")
+		"sword_damage", "sword_rate":
+			return preload("res://resources/upgrades/sword_stats.tres")
+		"double_sword_damage", "double_sword_rate":
+			return preload("res://resources/upgrades/double_sword_stats.tres")
+	return null
+
 func _get_damage_upgrade_percent(upgrade_id: String) -> float:
-	if upgrade_id == "axe_damage":
-		var stats: AbilityStats = preload("res://resources/upgrades/axe_stats.tres")
-		return stats.damage_upgrade_percent
-	elif upgrade_id == "sword_damage":
-		var stats: AbilityStats = preload("res://resources/upgrades/sword_stats.tres")
-		return stats.damage_upgrade_percent
-	elif upgrade_id == "double_sword_damage":
-		var stats: AbilityStats = preload("res://resources/upgrades/double_sword_stats.tres")
-		return stats.damage_upgrade_percent
+	var stats: AbilityStats = _get_stats_for_upgrade(upgrade_id)
+	if stats and stats.has_method("get"):
+		# Only return damage percent if the upgrade_id is for damage
+		if upgrade_id.ends_with("damage"):
+			return stats.damage_upgrade_percent
 	return 0.1  # Default fallback
 
 func _get_rate_upgrade_percent(upgrade_id: String) -> float:
-	if upgrade_id == "axe_rate":
-		var stats: AbilityStats = preload("res://resources/upgrades/axe_stats.tres")
-		return stats.rate_upgrade_percent
-	elif upgrade_id == "sword_rate":
-		var stats: AbilityStats = preload("res://resources/upgrades/sword_stats.tres")
-		return stats.rate_upgrade_percent
-	elif upgrade_id == "double_sword_rate":
-		var stats: AbilityStats = preload("res://resources/upgrades/double_sword_stats.tres")
-		return stats.rate_upgrade_percent
+	var stats: AbilityStats = _get_stats_for_upgrade(upgrade_id)
+	if stats and stats.has_method("get"):
+		# Only return rate percent if the upgrade_id is for rate
+		if upgrade_id.ends_with("rate"):
+			return stats.rate_upgrade_percent
 	return 0.1  # Default fallback
 
 

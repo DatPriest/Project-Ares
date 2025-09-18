@@ -1,9 +1,12 @@
 extends Node
 
 const SPAWN_RADIUS = 380
+@export var arena_time_manager: Node
+@export var wave_spawner_scene: PackedScene = preload("res://scenes/component/wave_spawner/wave_spawner.tscn")
 
 @export var generic_enemy_scene: PackedScene
-@export var arena_time_manager: Node
+
+
 
 # Enemy data resources
 @export var basic_enemy_data: EnemyData
@@ -22,26 +25,26 @@ func _ready():
 	timer.timeout.connect(on_timer_timeout)
 	arena_time_manager.arena_difficulty_increased.connect(on_arena_difficulty_increased)
 
-func get_spawn_position():
-	var player = get_tree().get_first_node_in_group("player")
-	if player == null:
-		return Vector2.ZERO
+# Wave resources to load - can be configured in the editor
+@export var wave_resources: Array[WaveResource] = [
+	preload("res://resources/wave_resources/advanced_wave.tres")
+]
+
+@onready var wave_spawner: WaveSpawner
+
+
+func _ready() -> void:
+	# Create and configure wave spawner
+	wave_spawner = wave_spawner_scene.instantiate()
+	add_child(wave_spawner)
 	
-	var spawn_position = Vector2.ZERO
-	var random_direction = Vector2.RIGHT.rotated(randf_range(0, TAU))
+	# Configure wave spawner
+	wave_spawner.arena_time_manager = arena_time_manager
+	wave_spawner.wave_resources = wave_resources
 	
-	for i in 4:
-		spawn_position = player.global_position + (random_direction * SPAWN_RADIUS)
-		var additional_check_offset = random_direction * 20
-		
-		var query_parameters = PhysicsRayQueryParameters2D.create(player.global_position, spawn_position + additional_check_offset, 1)
-		var result = get_tree().root.world_2d.direct_space_state.intersect_ray(query_parameters)
-		
-		if result.is_empty():
-			break
-		else:
-			random_direction = random_direction.rotated(deg_to_rad(90))
-	return spawn_position 
+	# Connect to wave spawner signals if needed
+	wave_spawner.enemy_spawned.connect(_on_enemy_spawned)
+
 
 func on_timer_timeout():
 	timer.start()	
@@ -64,3 +67,9 @@ func on_arena_difficulty_increased(arena_difficulty: int):
 		enemy_table.add_item(goblin_archer_data, 25)
 	if arena_difficulty == 6:
 		enemy_table.add_item(wizard_enemy_data, 20)
+
+func _on_enemy_spawned(enemy: Node2D) -> void:
+	# This can be used for additional logic when enemies are spawned
+	# For example, tracking enemy counts, triggering events, etc.
+	pass
+

@@ -19,10 +19,12 @@ func _ready():
 	timer.timeout.connect(_on_timer_timeout)
 	timer.start()
 
-func _physics_process(delta):
+# Override the base _process to implement archer behavior
+func _process(delta):
 	if player == null:
 		player = get_tree().get_first_node_in_group("player")
-		return
+		if player == null:
+			return
 
 	var direction_to_player = global_position.direction_to(player.global_position)
 	var distance_to_player = global_position.distance_to(player.global_position)

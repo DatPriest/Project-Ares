@@ -17,6 +17,8 @@ func _ready():
 	base_speed = velocity_component.max_speed
 	$CollisionArea2D.body_entered.connect(on_body_entered)
 	$CollisionArea2D.body_exited.connect(on_body_exited)
+	$CollisionArea2D.area_entered.connect(on_area_entered)
+	$CollisionArea2D.area_exited.connect(on_area_exited)
 	damage_interval_timer.timeout.connect(on_damage_interval_timer_timeout)
 	health_component.health_changed.connect(on_health_changed)
 	GameEvents.ability_upgrade_added.connect(on_ability_upgrade_added)
@@ -80,3 +82,14 @@ func on_ability_upgrade_added(ability_upgrade: AbilityUpgrade, current_upgrades:
 
 func on_resource_collected(resource: DropResource):
 	print(resource.title)
+
+func on_area_entered(area: Area2D):
+	# Handle projectile damage (immediate, not over time)
+	if area is Arrow:
+		var arrow = area as Arrow
+		health_component.damage(arrow.damage)
+		arrow.queue_free()
+
+func on_area_exited(area: Area2D):
+	# Projectiles don't need exit handling since they deal immediate damage
+	pass

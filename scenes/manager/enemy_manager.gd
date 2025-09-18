@@ -58,5 +58,5 @@ func on_arena_difficulty_increased(arena_difficulty: int):
 		enemy_table.add_item(wizard_enemy_scene, 20)
 	if arena_difficulty == 4:
 		enemy_table.add_item(goblin_enemy_scene, 30)
-	if arena_difficulty == 8:
+	if arena_difficulty == 5:
 		enemy_table.add_item(goblin_archer_scene, 25)

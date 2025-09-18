@@ -1,0 +1,53 @@
+[gd_scene load_steps=6 format=3 uid="uid://b8dpstest456"]
+
+[ext_resource type="Script" path="res://scenes/test/dps_benchmark/dps_test_scene.gd" id="1_test"]
+[ext_resource type="Script" path="res://scenes/test/dps_benchmark/dps_benchmark_manager.gd" id="2_manager"]
+[ext_resource type="PackedScene" uid="uid://b7xexample123" path="res://scenes/test/dps_benchmark/dummy_target.tscn" id="3_dummy"]
+[ext_resource type="PackedScene" uid="uid://gkvlsl7d16po" path="res://scenes/ability/axe_ability_controller/axe_ability_controller.tscn" id="4_axe"]
+[ext_resource type="PackedScene" uid="uid://cadq5igil1kex" path="res://scenes/ability/sword_ability_controller/sword_ability_controller.tscn" id="5_sword"]
+[ext_resource type="PackedScene" uid="uid://dsq2ma3o7c5wp" path="res://scenes/ability/double_sword_controller/double_sword_ability_controller.tscn" id="6_double"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
+size = Vector2(16, 16)
+
+[node name="DPSTestScene" type="Node2D"]
+script = ExtResource("1_test")
+dummy_target_scene = ExtResource("3_dummy")
+test_duration = 10.0
+axe_ability_controller_scene = ExtResource("4_axe")
+sword_ability_controller_scene = ExtResource("5_sword")
+double_sword_ability_controller_scene = ExtResource("6_double")
+
+[node name="DPSBenchmarkManager" type="Node" parent="."]
+script = ExtResource("2_manager")
+
+[node name="TestPlayer" type="CharacterBody2D" parent="." groups=["player"]]
+position = Vector2(100, 100)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestPlayer"]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="Visuals" type="Node2D" parent="TestPlayer"]
+
+[node name="Sprite2D" type="Sprite2D" parent="TestPlayer/Visuals"]
+modulate = Color(0.5, 0.5, 1, 1)
+texture = preload("res://icon.png")
+scale = Vector2(0.125, 0.125)
+
+[node name="Abilities" type="Node" parent="TestPlayer"]
+
+[node name="ForegroundLayer" type="Node2D" parent="." groups=["foreground_layer"]]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(100, 100)
+enabled = true
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="TestInstructions" type="Label" parent="UI"]
+offset_right = 400.0
+offset_bottom = 100.0
+text = "DPS Benchmark Test Scene
+Press SPACE to start test sequence
+Results will be logged to console and files"
+vertical_alignment = 1

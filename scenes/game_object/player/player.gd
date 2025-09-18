@@ -83,12 +83,12 @@ func on_ability_upgrade_added(ability_upgrade: AbilityUpgrade, current_upgrades:
 func on_resource_collected(resource: DropResource):
 	print(resource.title)
 
-func on_area_entered(area: Area2D):
+func on_area_entered(area: Area2D) -> void:
 	# Handle projectile damage (immediate, not over time)
 	if area is Arrow:
-		var arrow = area as Arrow
+		var arrow: Arrow = area as Arrow
 		health_component.damage(arrow.damage)
-		arrow.queue_free()
+		ProjectilePool.return_arrow(arrow)
 
 func on_area_exited(area: Area2D):
 	# Projectiles don't need exit handling since they deal immediate damage

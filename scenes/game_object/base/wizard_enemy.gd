@@ -9,7 +9,7 @@ func _ready():
 	super._ready()
 	
 	# Setup timer based on enemy data
-	if timer && enemy_data:
+	if timer and enemy_data:
 		timer.wait_time = enemy_data.movement_active_duration
 		timer.timeout.connect(_on_timer_timeout)
 		timer.start()

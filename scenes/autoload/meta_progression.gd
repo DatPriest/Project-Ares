@@ -83,7 +83,7 @@ func validate_meta_upgrades():
 	
 	# Report validation results
 	if validation_errors.size() == 0:
-		print("[MetaProgression] ✓ All %d MetaUpgrade resources are valid and ready for use" % meta_upgrade_resources.size())
+		push_warning("[MetaProgression] ✓ All %d MetaUpgrade resources are valid and ready for use" % meta_upgrade_resources.size())
 	else:
 		push_warning("[MetaProgression] Found %d validation issues in MetaUpgrade resources:" % validation_errors.size())
 		for error in validation_errors:

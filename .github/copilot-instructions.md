@@ -108,7 +108,7 @@ func _on_enemy_defeated(reward: int) -> void:
 
 Verwende `Resource`-basierte Skripte (`.gd`-Dateien, die von `Resource` erben), um Daten zu konfigurieren. Dies wird bereits für Upgrades (`AbilityUpgrade`) und Meta-Upgrades (`MetaUpgrade`) genutzt. Halte dich an dieses Muster für neue konfigurierbare Daten (z.B., Gegnertypen, Waffen-Stats).
 
-## 4\. Git-Workflow & Issue-Management
+## 4. Git-Workflow & Issue-Management
 
   * **Commit-Nachrichten:** Schreibe aussagekräftige Commit-Nachrichten. Beginne mit einem Präfix, das die Art der Änderung beschreibt (z.B., `feat:`, `fix:`, `refactor:`, `docs:`).
       * `feat: Implement Goblin Archer enemy`

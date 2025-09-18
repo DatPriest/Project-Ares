@@ -11,7 +11,7 @@ func _ready():
 	player = get_tree().get_first_node_in_group("player")
 	
 	# Setup timer based on enemy data
-	if timer && enemy_data:
+	if timer and enemy_data:
 		timer.wait_time = enemy_data.shoot_interval
 		timer.timeout.connect(_on_timer_timeout)
 		timer.start()

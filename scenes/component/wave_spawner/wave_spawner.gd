@@ -16,6 +16,10 @@ var arena_difficulty: int = 0
 
 func _ready() -> void:
 	timer.timeout.connect(_on_timer_timeout)
+	# Use call_deferred to ensure all nodes are ready before connecting
+	call_deferred("_setup_connections")
+
+func _setup_connections() -> void:
 	if arena_time_manager != null:
 		arena_time_manager.arena_difficulty_increased.connect(_on_arena_difficulty_increased)
 	
@@ -23,6 +27,9 @@ func _ready() -> void:
 	_update_current_wave()
 
 func _update_current_wave() -> void:
+	if wave_resources.is_empty():
+		return
+		
 	var time_elapsed: float = 0.0
 	if arena_time_manager != null:
 		time_elapsed = arena_time_manager.get_time_elapsed()

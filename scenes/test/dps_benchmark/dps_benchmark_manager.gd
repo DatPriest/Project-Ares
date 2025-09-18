@@ -81,8 +81,8 @@ func _on_damage_taken(damage_amount: float) -> void:
 	current_test_results["total_damage"] += damage_amount
 	current_test_results["hit_count"] += 1
 
+## Called when the test duration expires
 func _on_test_timeout() -> void:
-	"""Called when the test duration expires"""
 	_finalize_test_results()
 	_cleanup_test()
 

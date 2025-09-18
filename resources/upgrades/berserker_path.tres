@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="StrategicUpgrade" load_steps=2 format=3 uid="uid://k4d3b0r1s2t3u"]
+
+[ext_resource type="Script" path="res://resources/upgrades/strategic_upgrade.gd" id="1_strategic"]
+
+[resource]
+script = ExtResource("1_strategic")
+prerequisite_upgrades = Array[String](["axe", "sword_damage"])
+minimum_level = 5
+requires_multiplayer = false
+mutually_exclusive_with = Array[String](["defensive_path"])
+id = "berserker_path"
+max_quantity = 1
+name = "Berserker's Fury"
+description = "Unlock melee specialization path: +50% melee damage but -20% max health"

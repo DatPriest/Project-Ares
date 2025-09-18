@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="StrategicUpgrade" load_steps=2 format=3 uid="uid://q2m1n0o9r8s7t"]
+
+[ext_resource type="Script" path="res://resources/upgrades/strategic_upgrade.gd" id="1_strategic"]
+
+[resource]
+script = ExtResource("1_strategic")
+prerequisite_upgrades = Array[String](["magic_staff", "magic_staff_damage", "magic_staff_aoe"])
+minimum_level = 8
+requires_multiplayer = false
+mutually_exclusive_with = Array[String]([])
+id = "evolved_magic_staff"
+max_quantity = 1
+name = "Evolved Staff: Inferno Staff"
+description = "Staff evolution: Fireballs leave burning ground that damages over time"

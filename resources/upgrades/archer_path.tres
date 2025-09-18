@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="StrategicUpgrade" load_steps=2 format=3 uid="uid://l5e4c1s2t3u4v"]
+
+[ext_resource type="Script" path="res://resources/upgrades/strategic_upgrade.gd" id="1_strategic"]
+
+[resource]
+script = ExtResource("1_strategic")
+prerequisite_upgrades = Array[String](["bow", "bow_multishot"])
+minimum_level = 5
+requires_multiplayer = false
+mutually_exclusive_with = Array[String](["berserker_path"])
+id = "archer_path"
+max_quantity = 1
+name = "Master Archer"
+description = "Unlock ranged specialization path: +30% projectile speed and piercing arrows"

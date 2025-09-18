@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="StrategicUpgrade" load_steps=2 format=3 uid="uid://r3n2o1p0s9t8u"]
+
+[ext_resource type="Script" path="res://resources/upgrades/strategic_upgrade.gd" id="1_strategic"]
+
+[resource]
+script = ExtResource("1_strategic")
+prerequisite_upgrades = Array[String](["shield"])
+minimum_level = 6
+requires_multiplayer = true
+mutually_exclusive_with = Array[String]([])
+id = "team_shield"
+max_quantity = 1
+name = "Team Fortress"
+description = "Create a protective barrier when near teammates (Multiplayer + Shield)"

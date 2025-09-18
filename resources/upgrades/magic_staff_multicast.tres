@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AbilityUpgrade" load_steps=2 format=3 uid="uid://i4e3f2g1j0k9l"]
+
+[ext_resource type="Script" path="res://resources/upgrades/ability_upgrade.gd" id="1_3ohl5"]
+
+[resource]
+script = ExtResource("1_3ohl5")
+id = "magic_staff_multicast"
+max_quantity = 2
+name = "Multicast"
+description = "Casts an additional fireball"

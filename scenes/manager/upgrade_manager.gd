@@ -20,12 +20,51 @@ var upgrade_double_sword = preload("res://resources/upgrades/double_sword.tres")
 var upgrade_double_sword_damage = preload("res://resources/upgrades/double_sword_damage.tres")
 var upgrade_double_sword_rate = preload("res://resources/upgrades/double_sword_rate.tres")
 
+# New weapons
+var upgrade_bow = preload("res://resources/upgrades/bow.tres")
+var upgrade_bow_damage = preload("res://resources/upgrades/bow_damage.tres")
+var upgrade_bow_rate = preload("res://resources/upgrades/bow_rate.tres")
+var upgrade_bow_multishot = preload("res://resources/upgrades/bow_multishot.tres")
+
+var upgrade_magic_staff = preload("res://resources/upgrades/magic_staff.tres")
+var upgrade_magic_staff_damage = preload("res://resources/upgrades/magic_staff_damage.tres")
+var upgrade_magic_staff_rate = preload("res://resources/upgrades/magic_staff_rate.tres")
+var upgrade_magic_staff_aoe = preload("res://resources/upgrades/magic_staff_aoe.tres")
+var upgrade_magic_staff_multicast = preload("res://resources/upgrades/magic_staff_multicast.tres")
+
+# Shield weapon
+var upgrade_shield = preload("res://resources/upgrades/shield.tres")
+var upgrade_shield_damage = preload("res://resources/upgrades/shield_damage.tres")
+var upgrade_shield_count = preload("res://resources/upgrades/shield_count.tres")
+
+# Synergy abilities
+var upgrade_flaming_arrows = preload("res://resources/upgrades/flaming_arrows.tres")
+var upgrade_elemental_mastery = preload("res://resources/upgrades/elemental_mastery.tres")
+
+# Evolution abilities
+var upgrade_evolved_bow = preload("res://resources/upgrades/evolved_bow.tres")
+var upgrade_evolved_magic_staff = preload("res://resources/upgrades/evolved_magic_staff.tres")
+
+# Strategic paths
+var upgrade_berserker_path = preload("res://resources/upgrades/berserker_path.tres")
+var upgrade_archer_path = preload("res://resources/upgrades/archer_path.tres")
+
+# Multiplayer abilities
+var upgrade_team_buff_aura = preload("res://resources/upgrades/multiplayer/team_buff_aura.tres")
+var upgrade_shared_experience = preload("res://resources/upgrades/multiplayer/shared_experience.tres")
+var upgrade_team_shield = preload("res://resources/upgrades/multiplayer/team_shield.tres")
+
 func _ready():
 	upgrade_pool.add_item(upgrade_axe, 10)
 	upgrade_pool.add_item(upgrade_sword_rate, 10)
 	upgrade_pool.add_item(upgrade_sword_damage, 10)
 	upgrade_pool.add_item(upgrade_player_speed, 5)
 	upgrade_pool.add_item(upgrade_double_sword, 5)
+	
+	# Add new weapons to pool
+	upgrade_pool.add_item(upgrade_bow, 10)
+	upgrade_pool.add_item(upgrade_magic_staff, 10)
+	upgrade_pool.add_item(upgrade_shield, 10)
 	
 	if experience_manager == null:
 		push_error("UpgradeManager: experience_manager is null, level-up upgrades will not work")
@@ -41,6 +80,66 @@ func update_upgrade_pool(chosen_upgrade: AbilityUpgrade):
 	elif chosen_upgrade.id == upgrade_double_sword.id:
 		upgrade_pool.add_item(upgrade_double_sword_damage, 10)
 		upgrade_pool.add_item(upgrade_double_sword_rate, 10)
+	elif chosen_upgrade.id == upgrade_bow.id:
+		upgrade_pool.add_item(upgrade_bow_damage, 10)
+		upgrade_pool.add_item(upgrade_bow_rate, 10)
+		upgrade_pool.add_item(upgrade_bow_multishot, 8)
+	elif chosen_upgrade.id == upgrade_magic_staff.id:
+		upgrade_pool.add_item(upgrade_magic_staff_damage, 10)
+		upgrade_pool.add_item(upgrade_magic_staff_rate, 10)
+		upgrade_pool.add_item(upgrade_magic_staff_aoe, 8)
+		upgrade_pool.add_item(upgrade_magic_staff_multicast, 8)
+	elif chosen_upgrade.id == upgrade_shield.id:
+		upgrade_pool.add_item(upgrade_shield_damage, 10)
+		upgrade_pool.add_item(upgrade_shield_count, 8)
+	
+	# Check for synergies
+	_check_and_add_synergies()
+
+func _check_and_add_synergies():
+	# Flaming Arrows synergy (Bow + Magic Staff)
+	if current_upgrades.has("bow") and current_upgrades.has("magic_staff"):
+		if not current_upgrades.has("flaming_arrows"):
+			upgrade_pool.add_item(upgrade_flaming_arrows, 15)  # Higher weight for synergies
+	
+	# Elemental Mastery synergy (All 3 weapons)
+	if current_upgrades.has("bow") and current_upgrades.has("magic_staff") and current_upgrades.has("shield"):
+		if not current_upgrades.has("elemental_mastery"):
+			upgrade_pool.add_item(upgrade_elemental_mastery, 20)  # Very high weight for ultimate synergy
+	
+	# Strategic paths (level-gated)
+	var player_level = _get_current_player_level()
+	var is_multiplayer = _is_multiplayer_game()
+	
+	_check_strategic_upgrade(upgrade_berserker_path, player_level, is_multiplayer)
+	_check_strategic_upgrade(upgrade_archer_path, player_level, is_multiplayer)
+	_check_strategic_upgrade(upgrade_evolved_bow, player_level, is_multiplayer)
+	_check_strategic_upgrade(upgrade_evolved_magic_staff, player_level, is_multiplayer)
+	
+	# Multiplayer-specific upgrades
+	if is_multiplayer:
+		if not current_upgrades.has("team_buff_aura"):
+			upgrade_pool.add_item(upgrade_team_buff_aura, 8)
+		if not current_upgrades.has("shared_experience"):
+			upgrade_pool.add_item(upgrade_shared_experience, 8)
+		
+		# Advanced multiplayer abilities (require prerequisites)
+		_check_strategic_upgrade(upgrade_team_shield, player_level, is_multiplayer)
+
+func _check_strategic_upgrade(upgrade: StrategicUpgrade, player_level: int, is_multiplayer: bool):
+	if upgrade.can_unlock(current_upgrades, player_level, is_multiplayer):
+		if not current_upgrades.has(upgrade.id):
+			upgrade_pool.add_item(upgrade, 12)  # Medium-high weight for strategic paths
+
+func _get_current_player_level() -> int:
+	# Get current level from experience manager
+	if experience_manager and experience_manager.has_method("get_current_level"):
+		return experience_manager.get_current_level()
+	return 1
+
+func _is_multiplayer_game() -> bool:
+	# Check if this is a multiplayer session
+	return multiplayer.get_peers().size() > 0
 
 func apply_upgrade(upgrade: AbilityUpgrade):
 	var has_upgrade = current_upgrades.has(upgrade.id)

@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://e1b0c9d8g7f6e"]
+
+[ext_resource type="Script" path="res://scenes/ability/magic_staff_ability_controller/magic_staff_ability_controller.gd" id="1_staff_controller"]
+[ext_resource type="PackedScene" uid="uid://f2c1d0e9h8g7f" path="res://scenes/ability/magic_staff_ability/fireball.tscn" id="2_fireball_scene"]
+
+[node name="MagicStaffAbilityController" type="Node"]
+script = ExtResource("1_staff_controller")
+fireball_scene = ExtResource("2_fireball_scene")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true

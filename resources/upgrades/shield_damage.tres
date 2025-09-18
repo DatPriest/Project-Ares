@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AbilityUpgrade" load_steps=2 format=3 uid="uid://k6g5h4i3l2m1n"]
+
+[ext_resource type="Script" path="res://resources/upgrades/ability_upgrade.gd" id="1_3ohl5"]
+
+[resource]
+script = ExtResource("1_3ohl5")
+id = "shield_damage"
+max_quantity = 0
+name = "Orb Power"
+description = "Increases Shield Orb damage by 15%"

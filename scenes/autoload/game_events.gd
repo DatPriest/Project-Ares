@@ -6,6 +6,13 @@ signal enemy_killed(experience_amount: float)
 signal player_damaged
 signal resource_collected(resource: DropResource)
 
+# Boss-specific events
+signal boss_spawned(boss_data: EnemyData, boss_node: Node2D)
+signal boss_defeated(boss_data: EnemyData, experience_amount: float)
+signal boss_phase_changed(boss_data: EnemyData, new_phase: BossPhase, phase_index: int)
+signal boss_special_attack_started(boss_data: EnemyData, attack_name: String)
+signal boss_health_changed(boss_data: EnemyData, current_health: float, max_health: float)
+
 # Player position and movement events
 signal player_position_updated(player_position: Vector2)
 
@@ -68,3 +75,19 @@ func emit_entities_layer_ready(entities_layer: Node):
 
 func emit_foreground_layer_ready(foreground_layer: Node):
 	foreground_layer_ready.emit(foreground_layer)
+
+# Boss event emitters
+func emit_boss_spawned(boss_data: EnemyData, boss_node: Node2D):
+	boss_spawned.emit(boss_data, boss_node)
+
+func emit_boss_defeated(boss_data: EnemyData, experience_amount: float):
+	boss_defeated.emit(boss_data, experience_amount)
+
+func emit_boss_phase_changed(boss_data: EnemyData, new_phase: BossPhase, phase_index: int):
+	boss_phase_changed.emit(boss_data, new_phase, phase_index)
+
+func emit_boss_special_attack_started(boss_data: EnemyData, attack_name: String):
+	boss_special_attack_started.emit(boss_data, attack_name)
+
+func emit_boss_health_changed(boss_data: EnemyData, current_health: float, max_health: float):
+	boss_health_changed.emit(boss_data, current_health, max_health)

@@ -8,6 +8,9 @@ class_name BaseEnemy
 @onready var enemy_type: String = "BaseEnemy"
 @onready var enemy_id: String = "BaseEnemy"
 
+# Enemy data resource - set by enemy manager or scene
+@export var enemy_data: EnemyData
+
 func _process(delta):
 	velocity_component.accelerate_to_player()
 	velocity_component.move(self)

@@ -1,11 +1,23 @@
-# Godot 4+ specific ignores
+# Godot 4+
 .godot/
-./exe/*
-./exe/game.zip
-./exe/game.exe
-./exe/game.pck
-.vs
-.vs/*
-./build
-/build/release/*
-/build/debug/*
+.vscode/
+
+# C# / Mono
+.mono/
+bin/
+obj/
+*.csproj
+*.sln
+
+# Temporäre Dateien
+*.tmp
+
+# Exportierte Dateien
+*.exe
+*.pck
+*.rar
+
+# Build directories
+/exe/*
+/build/
+.vs/

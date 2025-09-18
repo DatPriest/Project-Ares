@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AbilityUpgrade" load_steps=2 format=3 uid="uid://e7y6z3l4m9n0q"]
+
+[ext_resource type="Script" path="res://resources/upgrades/ability_upgrade.gd" id="1_3ohl5"]
+
+[resource]
+script = ExtResource("1_3ohl5")
+id = "bow_multishot"
+max_quantity = 3
+name = "Multishot"
+description = "Fires an additional arrow"

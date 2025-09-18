@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AbilityUpgrade" load_steps=2 format=3 uid="uid://i2b1z8p9q0r1s"]
+
+[ext_resource type="Script" path="res://resources/upgrades/ability_upgrade.gd" id="1_3ohl5"]
+
+[resource]
+script = ExtResource("1_3ohl5")
+id = "team_buff_aura"
+max_quantity = 3
+name = "Team Aura"
+description = "Nearby teammates gain +10% damage (Multiplayer Only)"

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AbilityUpgrade" load_steps=2 format=3 uid="uid://h1a0y7o8p9q0r"]
+
+[ext_resource type="Script" path="res://resources/upgrades/ability_upgrade.gd" id="1_3ohl5"]
+
+[resource]
+script = ExtResource("1_3ohl5")
+id = "flaming_arrows"
+max_quantity = 1
+name = "Flaming Arrows"
+description = "Arrows explode on impact (Requires Bow + Magic Staff)"

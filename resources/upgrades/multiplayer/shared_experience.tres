@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AbilityUpgrade" load_steps=2 format=3 uid="uid://j3c2a9q0r1s2t"]
+
+[ext_resource type="Script" path="res://resources/upgrades/ability_upgrade.gd" id="1_3ohl5"]
+
+[resource]
+script = ExtResource("1_3ohl5")
+id = "shared_experience"
+max_quantity = 1
+name = "Experience Share"
+description = "15% of XP is shared with nearby teammates (Multiplayer Only)"

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="MetaUpgrade" load_steps=2 format=3 uid="uid://test456"]
+
+[ext_resource type="Script" path="res://resources/meta_upgrades/meta_upgrade.gd" id="1_yeb48"]
+
+[resource]
+script = ExtResource("1_yeb48")
+id = ""
+max_quantity = -1
+experience_cost = -50
+title = ""
+description = ""

@@ -1,18 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://bvoll4g416c5l"]
+[gd_scene load_steps=4 format=3 uid="uid://bvoll4g416c5l"]
 
 [ext_resource type="Script" path="res://scenes/manager/enemy_manager.gd" id="1_0akki"]
-[ext_resource type="PackedScene" uid="uid://xqnkguyw81is" path="res://scenes/game_object/enemies/basic_enemy/basic_enemy.tscn" id="2_26m78"]
-[ext_resource type="PackedScene" uid="uid://c8jmdu8ad3xu7" path="res://scenes/game_object/enemies/wizard_enemy/wizard_enemy.tscn" id="2_y7cd6"]
-[ext_resource type="PackedScene" uid="uid://cuod48cesmd47" path="res://scenes/game_object/enemies/goblin_enemy/goblin_enemy.tscn" id="4_h2cs5"]
-[ext_resource type="PackedScene" uid="uid://dw1t3nfy2cc5c" path="res://scenes/game_object/enemies/goblin_archer/goblin_archer.tscn" id="5_archer"]
+[ext_resource type="PackedScene" uid="uid://bkfcn2h7y1p0e" path="res://scenes/component/wave_spawner/wave_spawner.tscn" id="2_wave_spawner"]
+[ext_resource type="Resource" uid="uid://bmn7d8q6xpfg0" path="res://resources/wave_resources/advanced_wave.tres" id="3_advanced_wave"]
 
 [node name="EnemyManager" type="Node"]
 script = ExtResource("1_0akki")
-basic_enemy_scene = ExtResource("2_26m78")
-wizard_enemy_scene = ExtResource("2_y7cd6")
-goblin_enemy_scene = ExtResource("4_h2cs5")
-goblin_archer_scene = ExtResource("5_archer")
-
-[node name="Timer" type="Timer" parent="."]
-one_shot = true
-autostart = true
+wave_spawner_scene = ExtResource("2_wave_spawner")
+wave_resources = Array[WaveResource]([ExtResource("3_advanced_wave")])

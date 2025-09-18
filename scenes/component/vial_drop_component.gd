@@ -2,14 +2,17 @@ extends Node
 
 @export_range(0, 1) var drop_percent: float = .5
 @export var health_component: Node
+@export var damage_component: DamageComponent
 @export var vial_scene: PackedScene
 
+func _ready() -> void: 
+	# Prefer damage_component's died signal, fallback to health_component
+	if damage_component != null:
+		damage_component.died.connect(on_died)
+	elif health_component != null:
+		(health_component as HealthComponent).died.connect(on_died)
 
-func _ready(): 
-	(health_component as HealthComponent).died.connect(on_died)
-	
-
-func on_died():
+func on_died() -> void:
 	var adjusted_drop_percent = drop_percent
 	var experience_gain_upgrade_count = MetaProgression.get_upgrade_count("experience_gain")
 	if experience_gain_upgrade_count > 0:

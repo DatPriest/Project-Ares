@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bkfcn2h7y1p0e"]
+
+[ext_resource type="Script" path="res://scenes/component/wave_spawner/wave_spawner.gd" id="1_8x3cy"]
+
+[node name="WaveSpawner" type="Node"]
+script = ExtResource("1_8x3cy")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0

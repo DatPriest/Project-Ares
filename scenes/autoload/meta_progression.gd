@@ -88,7 +88,7 @@ func validate_meta_upgrades():
 		push_warning("[MetaProgression] Found %d validation issues in MetaUpgrade resources:" % validation_errors.size())
 		for error in validation_errors:
 			push_warning("  • " + error)
-		print("[MetaProgression] ⚠ Validation completed with %d errors - please fix invalid MetaUpgrade data" % validation_errors.size())
+		push_warning("[MetaProgression] ⚠ Validation completed with %d errors - please fix invalid MetaUpgrade data" % validation_errors.size())
 
 
 func _validate_single_meta_upgrade(upgrade: MetaUpgrade, resource_path: String, validation_errors: Array[String], used_ids: Dictionary):

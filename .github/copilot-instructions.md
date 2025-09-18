@@ -31,7 +31,6 @@ func apply_damage(amount: int) -> void:
     health -= amount
     if health <= 0:
         die()
-````
 
 ```gdscript
 # SCHLECHT

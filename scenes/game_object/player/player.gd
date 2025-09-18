@@ -3,6 +3,7 @@ extends CharacterBody2D
 
 @onready var damage_interval_timer = $DamageIntervalTimer 
 @onready var health_component = $HealthComponent
+@onready var damage_component: DamageComponent = $DamageComponent
 @onready var health_bar = $HealthBar 
 @onready var abilities = $Abilities
 @onready var animation_player = $AnimationPlayer
@@ -48,11 +49,15 @@ func get_movement_vector():
 	
 	return Vector2(x_movement, y_movement)
 
-func check_deal_damage():
+func check_deal_damage() -> void:
 	if number_colliding_bodies == 0 || !damage_interval_timer.is_stopped():
 		return
 	
-	health_component.damage(1)
+	# Use damage component if available, otherwise fallback to direct health damage
+	if damage_component != null:
+		damage_component.apply_damage(1.0, global_position)
+	else:
+		health_component.damage(1)
 	damage_interval_timer.start()
 	
 func update_health_display():
@@ -83,11 +88,15 @@ func on_ability_upgrade_added(ability_upgrade: AbilityUpgrade, current_upgrades:
 func on_resource_collected(resource: DropResource):
 	print(resource.title)
 
-func on_area_entered(area: Area2D):
+func on_area_entered(area: Area2D) -> void:
 	# Handle projectile damage (immediate, not over time)
 	if area is Arrow:
 		var arrow = area as Arrow
-		health_component.damage(arrow.damage)
+		# Use damage component if available, otherwise fallback to direct health damage
+		if damage_component != null:
+			damage_component.apply_damage(arrow.damage, global_position)
+		else:
+			health_component.damage(arrow.damage)
 		arrow.queue_free()
 
 func on_area_exited(area: Area2D):

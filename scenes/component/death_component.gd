@@ -1,16 +1,20 @@
 extends Node2D
 
 @export var health_component: Node
+@export var damage_component: DamageComponent
 @export var sprite: Sprite2D
 @onready var hit_random_audio_player_component = $HitRandomAudioPlayerComponent
 
-
-func _ready():
+func _ready() -> void:
 	$GPUParticles2D.texture = sprite.texture
-	health_component.died.connect(on_died)
 	
+	# Prefer damage_component's died signal, fallback to health_component
+	if damage_component != null:
+		damage_component.died.connect(on_died)
+	elif health_component != null:
+		health_component.died.connect(on_died)
 	
-func on_died():
+func on_died() -> void:
 	if owner == null || not owner is Node2D:
 		return
 		

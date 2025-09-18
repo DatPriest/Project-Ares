@@ -97,8 +97,9 @@ func on_ability_spawn_requested(ability_scene: PackedScene, position: Vector2, d
 		return
 	var ability_instance = ability_scene.instantiate()
 	# Set damage if the ability has a hitbox component
-	if "hitbox_component" in ability_instance:
-		ability_instance.hitbox_component.damage = damage
+	var hitbox_component = ability_instance.get("hitbox_component")
+	if hitbox_component:
+		hitbox_component.damage = damage
 	ability_instance.rotation = rotation_angle
 	foreground_layer.add_child(ability_instance)
 	ability_instance.global_position = position

@@ -31,6 +31,9 @@ func _process(delta):
 	velocity_component.accelerate_in_direction(direction)
 	velocity_component.move(self)
 	
+	# Emit position updates for other systems that need player position
+	GameEvents.emit_player_position_updated(global_position)
+	
 	if movement_vector.x != 0 || movement_vector.y != 0:
 		animation_player.play("walk")
 	else:

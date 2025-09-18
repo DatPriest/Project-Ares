@@ -6,6 +6,23 @@ signal enemy_killed(experience_amount: float)
 signal player_damaged
 signal resource_collected(resource: DropResource)
 
+# Player position and movement events
+signal player_position_updated(player_position: Vector2)
+
+# Entity spawning and management events  
+signal entity_spawn_requested(entity_scene: PackedScene, spawn_position: Vector2)
+signal projectile_spawn_requested(projectile_scene: PackedScene, spawn_position: Vector2, velocity: Vector2)
+signal resource_drop_requested(material_scene: PackedScene, spawn_position: Vector2, resource: DropResource)
+
+# UI and effect events
+signal floating_text_requested(text: String, position: Vector2)
+signal effect_spawn_requested(effect_scene: PackedScene, position: Vector2)
+signal ability_spawn_requested(ability_scene: PackedScene, position: Vector2, damage: float, rotation_angle: float)
+
+# Layer management events
+signal entities_layer_ready(entities_layer: Node)
+signal foreground_layer_ready(foreground_layer: Node)
+
 func emit_experience_vial_collected(number: float):
 	experience_vial_collected.emit(number)
 	
@@ -20,3 +37,34 @@ func emit_resource_collected(resource: DropResource):
 
 func emit_player_damaged():
 	player_damaged.emit()
+
+# Player position and movement event emitters
+func emit_player_position_updated(player_position: Vector2):
+	player_position_updated.emit(player_position)
+
+# Entity spawning and management event emitters
+func emit_entity_spawn_requested(entity_scene: PackedScene, spawn_position: Vector2):
+	entity_spawn_requested.emit(entity_scene, spawn_position)
+
+func emit_projectile_spawn_requested(projectile_scene: PackedScene, spawn_position: Vector2, velocity: Vector2):
+	projectile_spawn_requested.emit(projectile_scene, spawn_position, velocity)
+
+func emit_resource_drop_requested(material_scene: PackedScene, spawn_position: Vector2, resource: DropResource):
+	resource_drop_requested.emit(material_scene, spawn_position, resource)
+
+# UI and effect event emitters
+func emit_floating_text_requested(text: String, position: Vector2):
+	floating_text_requested.emit(text, position)
+
+func emit_effect_spawn_requested(effect_scene: PackedScene, position: Vector2):
+	effect_spawn_requested.emit(effect_scene, position)
+
+func emit_ability_spawn_requested(ability_scene: PackedScene, position: Vector2, damage: float, rotation_angle: float):
+	ability_spawn_requested.emit(ability_scene, position, damage, rotation_angle)
+
+# Layer management event emitters
+func emit_entities_layer_ready(entities_layer: Node):
+	entities_layer_ready.emit(entities_layer)
+
+func emit_foreground_layer_ready(foreground_layer: Node):
+	foreground_layer_ready.emit(foreground_layer)

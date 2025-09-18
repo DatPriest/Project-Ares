@@ -1,0 +1,21 @@
+[gd_resource type="EnemyData" script_class="EnemyData" load_steps=3 format=3 uid="uid://c5kx7n2m3r8qd"]
+
+[ext_resource type="Script" path="res://resources/enemy_data/enemy_data.gd" id="1_3x8cm"]
+[ext_resource type="Texture2D" uid="uid://bpn7v33vvbjyb" path="res://scenes/game_object/enemies/goblin_enemy/goblin.png" id="2_4h0ya"]
+
+[resource]
+script = ExtResource("1_3x8cm")
+id = "goblin_enemy"
+name = "Goblin Enemy"
+description = "A fierce goblin that alternates between moving and pausing like a wizard."
+max_health = 15.0
+max_speed = 45
+acceleration = 5.5
+xp_reward = 1.5
+sprite_texture = ExtResource("2_4h0ya")
+behavior_type = "Goblin"
+ideal_distance = 200.0
+arrow_speed = 300.0
+shoot_interval = 2.0
+movement_pause_duration = 1.0
+movement_active_duration = 2.0

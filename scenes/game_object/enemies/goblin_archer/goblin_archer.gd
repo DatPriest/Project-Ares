@@ -1,7 +1,6 @@
 extends BaseEnemy
 
-@export var arrow_scene: PackedScene
-@onready var timer = $Timer
+@onready var timer: Timer = $Timer
 
 # Distance the archer wants to maintain from player
 var ideal_distance = 200.0 
@@ -43,20 +42,19 @@ func _process(delta):
 	if move_sign != 0:
 		visuals.scale = Vector2(-move_sign, 1)
 
-func _on_timer_timeout():
+func _on_timer_timeout() -> void:
 	# Timer has elapsed, shoot an arrow
-	if player != null and arrow_scene != null:
-		var arrow_instance = arrow_scene.instantiate()
-		arrow_instance.global_position = global_position
+	if player != null:
+		var arrow: Arrow = ProjectilePool.get_arrow()
 		
-		# Calculate direction and set arrow velocity
-		var direction = global_position.direction_to(player.global_position)
-		arrow_instance.velocity = direction * arrow_speed
+		# Calculate direction and setup arrow
+		var direction: Vector2 = global_position.direction_to(player.global_position)
+		arrow.setup_arrow(global_position, direction, arrow_speed)
 		
 		# Add arrow to the entities layer
-		var entities_layer = get_tree().get_first_node_in_group("entities_layer")
+		var entities_layer: Node = get_tree().get_first_node_in_group("entities_layer")
 		if entities_layer:
-			entities_layer.add_child(arrow_instance)
+			entities_layer.add_child(arrow)
 		else:
 			# Fallback to adding to parent
-			get_parent().add_child(arrow_instance)
+			get_parent().add_child(arrow)

@@ -91,13 +91,15 @@ func on_resource_collected(resource: DropResource):
 func on_area_entered(area: Area2D) -> void:
 	# Handle projectile damage (immediate, not over time)
 	if area is Arrow:
+
 		var arrow = area as Arrow
 		# Use damage component if available, otherwise fallback to direct health damage
 		if damage_component != null:
 			damage_component.apply_damage(arrow.damage, global_position)
 		else:
 			health_component.damage(arrow.damage)
-		arrow.queue_free()
+
+    		ProjectilePool.return_arrow(arrow)
 
 func on_area_exited(area: Area2D):
 	# Projectiles don't need exit handling since they deal immediate damage

@@ -46,7 +46,7 @@ func _process(delta):
 
 func _on_timer_timeout():
 	# Timer has elapsed, shoot an arrow
-	if player != null && enemy_data != null && enemy_data.arrow_scene != null:
+	if player != null and enemy_data != null and enemy_data.arrow_scene != null:
 		var arrow_instance = enemy_data.arrow_scene.instantiate()
 		arrow_instance.global_position = global_position
 		

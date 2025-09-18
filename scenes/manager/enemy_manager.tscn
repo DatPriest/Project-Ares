@@ -1,15 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://bvoll4g416c5l"]
+[gd_scene load_steps=6 format=3 uid="uid://bvoll4g416c5l"]
 
 [ext_resource type="Script" path="res://scenes/manager/enemy_manager.gd" id="1_0akki"]
 [ext_resource type="PackedScene" uid="uid://xqnkguyw81is" path="res://scenes/game_object/enemies/basic_enemy/basic_enemy.tscn" id="2_26m78"]
 [ext_resource type="PackedScene" uid="uid://c8jmdu8ad3xu7" path="res://scenes/game_object/enemies/wizard_enemy/wizard_enemy.tscn" id="2_y7cd6"]
 [ext_resource type="PackedScene" uid="uid://cuod48cesmd47" path="res://scenes/game_object/enemies/goblin_enemy/goblin_enemy.tscn" id="4_h2cs5"]
+[ext_resource type="PackedScene" uid="uid://dw1t3nfy2cc5c" path="res://scenes/game_object/enemies/goblin_archer/goblin_archer.tscn" id="5_archer"]
 
 [node name="EnemyManager" type="Node"]
 script = ExtResource("1_0akki")
 basic_enemy_scene = ExtResource("2_26m78")
 wizard_enemy_scene = ExtResource("2_y7cd6")
 goblin_enemy_scene = ExtResource("4_h2cs5")
+goblin_archer_scene = ExtResource("5_archer")
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true

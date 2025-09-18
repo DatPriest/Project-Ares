@@ -37,7 +37,7 @@ func apply_enemy_data():
 		velocity_component.acceleration = enemy_data.acceleration
 		
 	# Apply visual
-	if sprite_2d && enemy_data.sprite_texture:
+	if sprite_2d and enemy_data.sprite_texture:
 		sprite_2d.texture = enemy_data.sprite_texture
 		
 	# Set identification

@@ -64,7 +64,7 @@ func set_ability_upgrade(upgrade: AbilityUpgrade):
 		var current_percent = int((current_multiplier - 1) * 100)
 		var new_percent = int((new_multiplier - 1) * 100)
 		
-		enhanced_description += "\n[color=green]%d%% -> %d%%[/color]" % [current_percent, new_percent]
+		enhanced_description += "\n[color=#00ff00]%d%% -> %d%%[/color]" % [current_percent, new_percent]
 		
 	elif upgrade.id.contains("rate"):
 		var current_quantity = 0
@@ -79,7 +79,7 @@ func set_ability_upgrade(upgrade: AbilityUpgrade):
 		var current_speed_increase = int(current_reduction * 100)
 		var new_speed_increase = int(new_reduction * 100)
 		
-		enhanced_description += "\n[color=green]+%d%% -> +%d%% Speed[/color]" % [current_speed_increase, new_speed_increase]
+		enhanced_description += "\n[color=#00ff00]+%d%% -> +%d%% Speed[/color]" % [current_speed_increase, new_speed_increase]
 		
 	elif upgrade.id == "player_speed":
 		var current_quantity = 0
@@ -90,7 +90,10 @@ func set_ability_upgrade(upgrade: AbilityUpgrade):
 		var current_speed_increase = current_quantity * 10
 		var new_speed_increase = (current_quantity + 1) * 10
 		
-		enhanced_description += "\n[color=green]+%d%% -> +%d%% Speed[/color]" % [current_speed_increase, new_speed_increase]
+		enhanced_description += "\n[color=#00ff00]+%d%% -> +%d%% Speed[/color]" % [current_speed_increase, new_speed_increase]
+	
+	# For any other upgrade types, just show the original description
+	# This handles new ability unlocks and any unknown upgrade types gracefully
 	
 	description_label.text = enhanced_description
 

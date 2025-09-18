@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://cw1t3nfy2cc4c"]
+
+[ext_resource type="Script" path="res://scenes/game_object/projectiles/arrow.gd" id="1_arrow"]
+[ext_resource type="Texture2D" uid="uid://bw1t3nfy2cc4b" path="res://scenes/game_object/projectiles/arrow.png" id="2_arrow"]
+[ext_resource type="PackedScene" uid="uid://jl0i6b85oyql" path="res://scenes/component/hitbox_component.tscn" id="3_arrow"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_arrow"]
+size = Vector2(16, 4)
+
+[node name="Arrow" type="Area2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_arrow")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_arrow")
+scale = Vector2(0.5, 0.5)
+
+[node name="HitboxComponent" parent="." instance=ExtResource("3_arrow")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+shape = SubResource("RectangleShape2D_arrow")
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+rect = Rect2(-10, -10, 20, 20)
+
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="queue_free"]

@@ -5,16 +5,21 @@ extends Node2D
 
 @export var experience_amount: float = 1
 
+var cached_player_position = Vector2.ZERO
+
 func _ready():
 	$Area2D.area_entered.connect(on_area_entered)
+	GameEvents.player_position_updated.connect(on_player_position_updated)
+
+func on_player_position_updated(player_position: Vector2):
+	cached_player_position = player_position
 	
 func tween_collect(percent: float, start_position: Vector2):
-	var player = get_tree().get_first_node_in_group("player")
-	if player == null:
+	if cached_player_position == Vector2.ZERO:
 		return
 	
-	global_position = start_position.lerp(player.global_position, percent)
-	var direction_from_start = player.global_position - start_position
+	global_position = start_position.lerp(cached_player_position, percent)
+	var direction_from_start = cached_player_position - start_position
 	
 	var target_rotation = direction_from_start.angle() + deg_to_rad(90)
 	rotation = lerp_angle(rotation, target_rotation, 1 - exp(-2 * get_process_delta_time()))

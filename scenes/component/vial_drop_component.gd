@@ -2,17 +2,12 @@ extends Node
 
 @export_range(0, 1) var drop_percent: float = .5
 @export var health_component: Node
-@export var damage_component: DamageComponent
 @export var vial_scene: PackedScene
 
-func _ready() -> void: 
-	# Prefer damage_component's died signal, fallback to health_component
-	if damage_component != null:
-		damage_component.died.connect(on_died)
-	elif health_component != null:
-		(health_component as HealthComponent).died.connect(on_died)
+func _ready(): 
+	(health_component as HealthComponent).died.connect(on_died)
 
-func on_died() -> void:
+func on_died():
 	var adjusted_drop_percent = drop_percent
 	var experience_gain_upgrade_count = MetaProgression.get_upgrade_count("experience_gain")
 	if experience_gain_upgrade_count > 0:
@@ -26,7 +21,5 @@ func on_died() -> void:
 		return
 		
 	var spawn_position = (owner as Node2D).global_position
-	var vial_instance = vial_scene.instantiate() as Node2D
-	var entities_layer = get_tree().get_first_node_in_group("entities_layer")
-	entities_layer.add_child(vial_instance)
-	vial_instance.global_position = spawn_position
+	# Use event system for entity spawning instead of direct layer access
+	GameEvents.emit_entity_spawn_requested(vial_scene, spawn_position)

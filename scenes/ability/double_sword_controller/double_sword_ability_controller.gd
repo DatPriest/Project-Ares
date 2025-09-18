@@ -1,40 +1,35 @@
 extends Node
 
+@export var base_damage = 2.5
 @export var double_sword_ability_scene: PackedScene
-@export var ability_stats: AbilityStats
-@onready var timer: Timer = $Timer
+@onready var timer = $Timer
 
-func _ready() -> void:
-	if ability_stats == null:
-		ability_stats = preload("res://resources/upgrades/double_sword_stats.tres")
-	
-	# Initialize stats and timer
-	ability_stats.reset_to_base()
-	timer.wait_time = ability_stats.current_cooldown
-	
+var additional_damage_percent = 1
+var base_wait_time 
+var cached_player_position = Vector2.ZERO
+
+func _ready():
+	base_wait_time = timer.wait_time
 	timer.timeout.connect(on_timer_timeout)
 	GameEvents.ability_upgrade_added.connect(on_ability_upgrade_added)
+	GameEvents.player_position_updated.connect(on_player_position_updated)
 
-func on_timer_timeout() -> void:
-	var player: Node2D = get_tree().get_first_node_in_group("player") as Node2D
-	if player == null:
+func on_player_position_updated(player_position: Vector2):
+	cached_player_position = player_position
+
+func on_timer_timeout():
+	if cached_player_position == Vector2.ZERO:
 		return
 		
-	var foreground: Node2D = get_tree().get_first_node_in_group("foreground_layer") as Node2D
-	if foreground == null: 
-		return
-		
-	var double_sword_instance: Node2D = double_sword_ability_scene.instantiate() as Node2D
-	foreground.add_child(double_sword_instance)
-	double_sword_instance.global_position = player.global_position
-	double_sword_instance.hitbox_component.damage = ability_stats.current_damage
+	var damage = base_damage * additional_damage_percent
 	
-func on_ability_upgrade_added(upgrade: AbilityUpgrade, current_upgrades: Dictionary) -> void:
+	# Use event system for ability spawning instead of direct layer access
+	GameEvents.emit_ability_spawn_requested(double_sword_ability_scene, cached_player_position, damage, 0.0)
+	
+func on_ability_upgrade_added(upgrade: AbilityUpgrade, current_upgrades: Dictionary):
 	if upgrade.id == "double_sword_damage":
-		var quantity: int = current_upgrades["double_sword_damage"]["quantity"]
-		ability_stats.apply_damage_upgrade(quantity)
+		additional_damage_percent = 1 + (current_upgrades["double_sword_damage"]["quantity"] * .1)
 	elif upgrade.id == "double_sword_rate":
-		var quantity: int = current_upgrades["double_sword_rate"]["quantity"]
-		ability_stats.apply_rate_upgrade(quantity)
-		timer.wait_time = ability_stats.current_cooldown
+		var percent_reduction = current_upgrades["double_sword_rate"]["quantity"] * .1
+		timer.wait_time = base_wait_time * (1 - percent_reduction)
 		timer.start()

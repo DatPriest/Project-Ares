@@ -1,32 +1,35 @@
 extends BaseEnemy
 
-@onready var timer: Timer = $Timer
+@export var arrow_scene: PackedScene
+@onready var timer = $Timer
 
 # Distance the archer wants to maintain from player
 var ideal_distance = 200.0 
 # Speed of the arrows
 var arrow_speed = 300.0 
 
-var player: Node2D
+var cached_player_position = Vector2.ZERO
 
 func _ready():
 	super._ready()
-	# Get reference to player
-	player = get_tree().get_first_node_in_group("player")
+	
+	# Connect to player position updates instead of direct access
+	GameEvents.player_position_updated.connect(on_player_position_updated)
 	
 	# Connect timer signal
 	timer.timeout.connect(_on_timer_timeout)
 	timer.start()
 
+func on_player_position_updated(player_position: Vector2):
+	cached_player_position = player_position
+
 # Override the base _process to implement archer behavior
 func _process(delta):
-	if player == null:
-		player = get_tree().get_first_node_in_group("player")
-		if player == null:
-			return
+	if cached_player_position == Vector2.ZERO:
+		return
 
-	var direction_to_player = global_position.direction_to(player.global_position)
-	var distance_to_player = global_position.distance_to(player.global_position)
+	var direction_to_player = global_position.direction_to(cached_player_position)
+	var distance_to_player = global_position.distance_to(cached_player_position)
 
 	if distance_to_player < ideal_distance:
 		# Run away if player is too close
@@ -42,19 +45,12 @@ func _process(delta):
 	if move_sign != 0:
 		visuals.scale = Vector2(-move_sign, 1)
 
-func _on_timer_timeout() -> void:
+func _on_timer_timeout():
 	# Timer has elapsed, shoot an arrow
-	if player != null:
-		var arrow: Arrow = ProjectilePool.get_arrow()
+	if cached_player_position != Vector2.ZERO and arrow_scene != null:
+		# Calculate direction and velocity
+		var direction = global_position.direction_to(cached_player_position)
+		var arrow_velocity = direction * arrow_speed
 		
-		# Calculate direction and setup arrow
-		var direction: Vector2 = global_position.direction_to(player.global_position)
-		arrow.setup_arrow(global_position, direction, arrow_speed)
-		
-		# Add arrow to the entities layer
-		var entities_layer: Node = get_tree().get_first_node_in_group("entities_layer")
-		if entities_layer:
-			entities_layer.add_child(arrow)
-		else:
-			# Fallback to adding to parent
-			get_parent().add_child(arrow)
+		# Use event system for projectile spawning instead of direct layer access
+		GameEvents.emit_projectile_spawn_requested(arrow_scene, global_position, arrow_velocity)

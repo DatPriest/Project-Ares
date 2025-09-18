@@ -9,6 +9,7 @@ var current_phase_index: int = 0
 var current_phase: BossPhase
 var phase_transition_active: bool = false
 var boss_health_component: HealthComponent
+var boss_network_sync: BossNetworkSyncComponent
 
 func _ready():
 	super._ready()
@@ -152,6 +153,12 @@ func _setup_boss_behavior():
 		push_error("Boss enemy requires HealthComponent")
 		return
 	
+	# Set up network synchronization if needed
+	if enemy_data.network_sync_required:
+		boss_network_sync = get_node_or_null("BossNetworkSyncComponent") as BossNetworkSyncComponent
+		if boss_network_sync != null:
+			boss_network_sync.boss_data = enemy_data
+	
 	# Connect to health changes for phase transitions
 	boss_health_component.health_changed.connect(_on_boss_health_changed)
 	
@@ -229,6 +236,10 @@ func _trigger_phase_transition(new_phase_index: int):
 	# Emit phase change event
 	GameEvents.emit_boss_phase_changed(enemy_data, current_phase, current_phase_index)
 	
+	# Notify network sync component
+	if boss_network_sync != null:
+		boss_network_sync.notify_phase_change(current_phase_index)
+	
 	# Handle invulnerability during transition
 	if current_phase.invulnerable_during_transition:
 		var damage_component = get_node_or_null("DamageComponent") as DamageComponent
@@ -265,13 +276,22 @@ func _execute_boss_special_attack():
 	if attacks_to_use.size() == 0:
 		return
 	
+	# Mark as attacking for network sync
+	set_meta("is_attacking", true)
+	
 	# Pick a random attack
 	var attack_scene = attacks_to_use[randi() % attacks_to_use.size()]
 	if attack_scene == null:
+		set_meta("is_attacking", false)
 		return
 	
 	# Emit special attack event
-	GameEvents.emit_boss_special_attack_started(enemy_data, attack_scene.resource_path.get_file().get_basename())
+	var attack_name = attack_scene.resource_path.get_file().get_basename()
+	GameEvents.emit_boss_special_attack_started(enemy_data, attack_name)
+	
+	# Notify network sync component
+	if boss_network_sync != null:
+		boss_network_sync.notify_special_attack(attack_name, global_position)
 	
 	# Instantiate and position the attack
 	var attack_instance = attack_scene.instantiate()
@@ -283,8 +303,30 @@ func _execute_boss_special_attack():
 		entities_layer.add_child(attack_instance)
 	else:
 		get_parent().add_child(attack_instance)
+	
+	# Clear attacking flag after a delay
+	get_tree().create_timer(1.0).timeout.connect(func():
+		set_meta("is_attacking", false)
+	)
 
 func _on_enemy_died():
 	# Handle boss-specific death events
 	if enemy_data != null and enemy_data.is_boss and enemy_data.behavior_type == "Boss":
 		GameEvents.emit_boss_defeated(enemy_data, enemy_data.xp_reward)
+
+# Network synchronization helper methods for multiplayer
+func get_current_phase_index() -> int:
+	return current_phase_index
+
+func set_current_phase_index(new_phase_index: int):
+	if new_phase_index < enemy_data.boss_phases.size():
+		current_phase_index = new_phase_index
+		current_phase = enemy_data.boss_phases[current_phase_index]
+
+func is_attacking() -> bool:
+	# Returns true if boss is currently executing a special attack
+	return get_meta("is_attacking", false)
+
+func execute_special_attack_client(attack_name: String, position: Vector2):
+	# Execute special attack on client side (called via RPC)
+	print("Client executing boss attack: ", attack_name, " at ", position)

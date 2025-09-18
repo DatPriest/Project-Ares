@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3 uid="uid://b2n4ql7fx8xja"]
+
+[ext_resource type="Script" path="res://scenes/manager/boss_manager.gd" id="1_boss_mgr"]
+[ext_resource type="PackedScene" uid="uid://bx60xxk7i6vce" path="res://scenes/game_object/generic_enemy.tscn" id="2_generic"]
+[ext_resource type="Resource" uid="uid://dcdnc58cksrxa" path="res://resources/enemy_data/boss_goblin_king_data.tres" id="3_boss_data"]
+
+[node name="BossManager" type="Node"]
+script = ExtResource("1_boss_mgr")
+generic_enemy_scene = ExtResource("2_generic")
+boss_spawn_times = Array[float]([120.0, 300.0, 600.0])
+boss_data_resources = Array[EnemyData]([ExtResource("3_boss_data")])

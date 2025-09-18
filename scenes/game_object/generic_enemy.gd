@@ -34,7 +34,13 @@ func setup_behavior():
 
 func _process(delta):
 	if enemy_data == null:
-		super._process(delta)
+		# Default basic behavior when no data is provided
+		velocity_component.accelerate_to_player()
+		velocity_component.move(self)
+		
+		var move_sign = sign(velocity.x)
+		if move_sign != 0:
+			visuals.scale = Vector2(-move_sign, 1)
 		return
 		
 	match enemy_data.behavior_type:
@@ -43,7 +49,13 @@ func _process(delta):
 		"Archer":
 			_process_archer_behavior(delta)
 		_:
-			super._process(delta)
+			# Default basic behavior
+			velocity_component.accelerate_to_player()
+			velocity_component.move(self)
+			
+			var move_sign = sign(velocity.x)
+			if move_sign != 0:
+				visuals.scale = Vector2(-move_sign, 1)
 
 func _process_wizard_behavior(delta):
 	var is_moving = get_meta("is_moving", true)

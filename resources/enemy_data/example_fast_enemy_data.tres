@@ -1,17 +1,17 @@
-[gd_resource type="EnemyData" load_steps=3 format=3 uid="uid://dcdnc58cksrxj"]
+[gd_resource type="EnemyData" load_steps=3 format=3 uid="uid://example123"]
 
 [ext_resource type="Script" path="res://resources/enemy_data/enemy_data.gd" id="1_3x8cm"]
 [ext_resource type="Texture2D" uid="uid://8afgt4k1c3y5" path="res://scenes/game_object/enemies/basic_enemy/rat_enemy.png" id="2_4h0ya"]
 
 [resource]
 script = ExtResource("1_3x8cm")
-id = "basic_enemy"
-name = "Basic Enemy"
-description = "A simple enemy that moves directly toward the player."
-max_health = 10.0
-max_speed = 40
-acceleration = 5.0
-xp_reward = 1.0
+id = "fast_enemy"
+name = "Fast Enemy"
+description = "A high-speed enemy with low health - perfect for demonstrating how easy it is to create new enemy types!"
+max_health = 5.0
+max_speed = 80
+acceleration = 8.0
+xp_reward = 1.5
 sprite_texture = ExtResource("2_4h0ya")
 behavior_type = "Basic"
 ideal_distance = 200.0

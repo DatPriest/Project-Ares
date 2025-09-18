@@ -1,4 +1,4 @@
-[gd_resource type="EnemyData" script_class="EnemyData" load_steps=3 format=3 uid="uid://bk0xtgb52qg5g"]
+[gd_resource type="EnemyData" load_steps=3 format=3 uid="uid://bk0xtgb52qg5g"]
 
 [ext_resource type="Script" path="res://resources/enemy_data/enemy_data.gd" id="1_3x8cm"]
 [ext_resource type="Texture2D" uid="uid://cqs4qfh0q2q1o" path="res://scenes/game_object/enemies/wizard_enemy/wizard_enemy.png" id="2_4h0ya"]

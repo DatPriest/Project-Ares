@@ -1,4 +1,4 @@
-[gd_resource type="EnemyData" script_class="EnemyData" load_steps=3 format=3 uid="uid://c5kx7n2m3r8qd"]
+[gd_resource type="EnemyData" load_steps=3 format=3 uid="uid://c5kx7n2m3r8qd"]
 
 [ext_resource type="Script" path="res://resources/enemy_data/enemy_data.gd" id="1_3x8cm"]
 [ext_resource type="Texture2D" uid="uid://bpn7v33vvbjyb" path="res://scenes/game_object/enemies/goblin_enemy/goblin.png" id="2_4h0ya"]

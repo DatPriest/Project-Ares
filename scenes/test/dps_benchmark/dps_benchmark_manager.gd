@@ -148,6 +148,6 @@ func run_all_ability_tests(ability_configs: Array) -> void:
 	
 	print("All DPS tests completed!")
 
+## Get the results of the last completed test
 func get_test_results() -> Dictionary:
-	"""Get the results of the last completed test"""
 	return current_test_results.duplicate()

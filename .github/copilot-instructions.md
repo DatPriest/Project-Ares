@@ -1,11 +1,10 @@
-
 # Anweisungen für KI-Assistenten (GitHub Copilot) für "Project Ares"
 
 Willkommen bei Project Ares! Du bist ein KI-Assistent, der bei der Entwicklung dieses Spiels hilft. Um sicherzustellen, dass dein Beitrag konsistent und von hoher Qualität ist, befolge bitte die folgenden Anweisungen genau.
 
 ## 1. Projektübersicht
 
-**Projekt Ares** ist ein 2D-Top-Down-Actionspiel im Survivor-Stil, entwickelt mit der **Godot Engine 4** und **GDScript**. Der Spieler steuert einen Charakter, der automatisch angreift, und muss Wellen von Gegnern überleben, indem er Erfahrung sammelt, auflevelt und neue Fähigkeiten oder Verbesserungen auswählt.
+**Project Ares** ist ein 2D-Top-Down-Actionspiel im Survivor-Stil, entwickelt mit der **Godot Engine 4** und **GDScript**. Der Spieler steuert einen Charakter, der automatisch angreift, und muss Wellen von Gegnern überleben, indem er Erfahrung sammelt, auflevelt und neue Fähigkeiten oder Verbesserungen auswählt.
 
 **Kern-Features:**
 * **Spieler-Progression:** Sammeln von Erfahrungspunkten (XP), Level-Ups.
@@ -31,6 +30,7 @@ func apply_damage(amount: int) -> void:
     health -= amount
     if health <= 0:
         die()
+```
 
 ```gdscript
 # SCHLECHT
@@ -89,19 +89,20 @@ Globale Manager werden als Singletons über Godots "Autoload"-Funktion verwaltet
   * **`GameEvents`:** Ein zentraler Event-Bus für die entkoppelte Kommunikation zwischen Spielsystemen. Anstatt direkte Referenzen zu halten, sollten Systeme Signale über `GameEvents` senden und empfangen.
   * **`MetaProgression`:** Verwaltet dauerhafte Upgrades zwischen Spielrunden.
   * **`MusicPlayer`:** Steuert die Hintergrundmusik.
+  * **`ScreenTransition`:** Verwaltet Szenenübergänge und Bildschirmeffekte.
 
 **Beispiel für die Verwendung von `GameEvents`:**
 
 ```gdscript
 # Ein Gegner sendet ein Signal, wenn er besiegt wird
-GameEvents.enemy_defeated.emit(reward_amount)
+GameEvents.emit_enemy_killed(experience_amount)
 
 # Ein UI-Element hört auf dieses Signal
 func _ready() -> void:
-    GameEvents.enemy_defeated.connect(_on_enemy_defeated)
+    GameEvents.enemy_killed.connect(_on_enemy_killed)
 
-func _on_enemy_defeated(reward: int) -> void:
-    # Logik, um die Punktzahl zu aktualisieren
+func _on_enemy_killed(experience_amount: float) -> void:
+    # Logik, um die Erfahrungspunkte zu verarbeiten
 ```
 
 ### 3.3. Ressourcen für Konfiguration
@@ -117,7 +118,4 @@ Verwende `Resource`-basierte Skripte (`.gd`-Dateien, die von `Resource` erben), 
   * **Branching:** Erstelle für jedes neue Feature oder jeden Bugfix einen eigenen Branch.
   * **Issues:** Wenn du an einem GitHub Issue arbeitest, referenziere es in deinen Commits (z.B., `feat: Implement Goblin Archer (fixes #1)`).
 
-Wenn du den Auftrag erhältst, neue Issues zu erstellen (wie in Issue \#5 beschrieben), analysiere den Code gemäß den dortigen Richtlinien und erstelle detaillierte, umsetzbare Issues.
-
-```
-```
+Wenn du den Auftrag erhältst, neue Issues zu erstellen (wie in Issue #5 beschrieben), analysiere den Code gemäß den dortigen Richtlinien und erstelle detaillierte, umsetzbare Issues.

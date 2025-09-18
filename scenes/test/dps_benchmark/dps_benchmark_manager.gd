@@ -123,7 +123,7 @@ func _cleanup_test() -> void:
 	current_ability_name = ""
 
 func run_all_ability_tests(ability_configs: Array) -> void:
-	"""Run DPS tests for multiple abilities in sequence"""
+	## Run DPS tests for multiple abilities in sequence
 	print("Starting batch DPS testing for %d abilities..." % ability_configs.size())
 	
 	for config in ability_configs:

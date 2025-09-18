@@ -86,8 +86,8 @@ func _on_test_timeout() -> void:
 	_finalize_test_results()
 	_cleanup_test()
 
+## Calculate final DPS and other metrics
 func _finalize_test_results() -> void:
-	"""Calculate final DPS and other metrics"""
 	var total_damage: float = current_test_results["total_damage"]
 	var hit_count: int = current_test_results["hit_count"]
 	

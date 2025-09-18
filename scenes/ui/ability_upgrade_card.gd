@@ -35,6 +35,10 @@ func _ready():
 	mouse_entered.connect(on_mouse_entered)
 
 func set_ability_upgrade(upgrade: AbilityUpgrade):
+	if upgrade == null:
+		push_error("AbilityUpgradeCard: upgrade is null")
+		return
+		
 	name_label.text = upgrade.name
 	
 	# Get current upgrades from the upgrade manager

@@ -113,7 +113,7 @@ func _finalize_test_results() -> void:
 	benchmark_completed.emit(current_test_results.duplicate())
 
 func _cleanup_test() -> void:
-	"""Clean up after test completion"""
+	## Clean up after test completion
 	if current_dummy_target != null:
 		current_dummy_target.damage_taken.disconnect(_on_damage_taken)
 		current_dummy_target.queue_free()

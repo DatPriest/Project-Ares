@@ -47,7 +47,7 @@ func _ready() -> void:
 
 
 func on_timer_timeout():
-	timer.start()	
+	timer.start()
 	var enemy_data = enemy_table.pick_item() as EnemyData
 	var enemy = generic_enemy_scene.instantiate() as GenericEnemy
 	enemy.enemy_data = enemy_data

@@ -4,29 +4,38 @@ class_name HurtboxComponent
 signal hit
 
 @export var health_component: HealthComponent
+@export var damage_component: DamageComponent
 
-var floating_text_scene = preload("res://scenes/ui/floating_text.tscn")
-
-func _ready():
+func _ready() -> void:
 	area_entered.connect(on_area_entered)
 
-
-func on_area_entered(other_area: Area2D):
+func on_area_entered(other_area: Area2D) -> void:
 	if not other_area is HitboxComponent:
 		return
 	
-	if health_component == null:
+	var hitbox_component = other_area as HitboxComponent
+	
+	# Use DamageComponent if available, otherwise fallback to direct health damage
+	if damage_component != null:
+		damage_component.apply_damage(hitbox_component.damage, global_position)
+	elif health_component != null:
+		# Fallback for backward compatibility
+		health_component.damage(hitbox_component.damage)
+		# Show floating text manually if no damage component
+		_show_floating_text_fallback(hitbox_component.damage)
+	
+	hit.emit()
+
+func _show_floating_text_fallback(damage_amount: float) -> void:
+	var floating_text_scene = preload("res://scenes/ui/floating_text.tscn")
+	var floating_text = floating_text_scene.instantiate() as Node2D
+	var foreground_layer = get_tree().get_first_node_in_group("foreground_layer")
+	
+	if foreground_layer == null:
 		return
 	
-	var hitbox_component = other_area as HitboxComponent
-	health_component.damage(hitbox_component.damage)
-	
-	var floating_text = floating_text_scene.instantiate() as Node2D
-	get_tree().get_first_node_in_group("foreground_layer").add_child(floating_text)
-	
+	foreground_layer.add_child(floating_text)
 	floating_text.global_position = global_position + (Vector2.UP * 16)
 	
 	var format_string = "%0.2f"
-	floating_text.start(format_string % hitbox_component.damage)
-	
-	hit.emit()
+	floating_text.start(format_string % damage_amount)

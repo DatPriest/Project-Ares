@@ -36,7 +36,62 @@ func _ready():
 
 func set_ability_upgrade(upgrade: AbilityUpgrade):
 	name_label.text = upgrade.name
-	description_label.text = upgrade.description
+	
+	# Get current upgrades from the upgrade manager
+	var upgrade_manager = get_tree().get_first_node_in_group("upgrade_manager")
+	var current_upgrades = {}
+	if upgrade_manager != null:
+		current_upgrades = upgrade_manager.current_upgrades
+	
+	# Calculate before/after values based on upgrade type
+	var enhanced_description = upgrade.description
+	
+	if upgrade.id.contains("damage"):
+		var current_quantity = 0
+		if current_upgrades.has(upgrade.id):
+			current_quantity = current_upgrades[upgrade.id]["quantity"]
+		
+		# Different damage calculation for different abilities
+		var damage_increase_per_level = 0.1  # Default 10%
+		if upgrade.id == "sword_damage":
+			damage_increase_per_level = 0.15  # Sword damage increases by 15%
+		
+		var current_multiplier = 1 + (current_quantity * damage_increase_per_level)
+		var new_multiplier = 1 + ((current_quantity + 1) * damage_increase_per_level)
+		
+		# Convert to percentage for display
+		var current_percent = int((current_multiplier - 1) * 100)
+		var new_percent = int((new_multiplier - 1) * 100)
+		
+		enhanced_description += "\n[color=green]%d%% -> %d%%[/color]" % [current_percent, new_percent]
+		
+	elif upgrade.id.contains("rate"):
+		var current_quantity = 0
+		if current_upgrades.has(upgrade.id):
+			current_quantity = current_upgrades[upgrade.id]["quantity"]
+		
+		# Rate upgrades reduce wait time by 10% per level
+		var current_reduction = current_quantity * 0.1
+		var new_reduction = (current_quantity + 1) * 0.1
+		
+		# Convert to percentage for display (showing speed increase)
+		var current_speed_increase = int(current_reduction * 100)
+		var new_speed_increase = int(new_reduction * 100)
+		
+		enhanced_description += "\n[color=green]+%d%% -> +%d%% Speed[/color]" % [current_speed_increase, new_speed_increase]
+		
+	elif upgrade.id == "player_speed":
+		var current_quantity = 0
+		if current_upgrades.has(upgrade.id):
+			current_quantity = current_upgrades[upgrade.id]["quantity"]
+		
+		# Player speed increases by 10% per level
+		var current_speed_increase = current_quantity * 10
+		var new_speed_increase = (current_quantity + 1) * 10
+		
+		enhanced_description += "\n[color=green]+%d%% -> +%d%% Speed[/color]" % [current_speed_increase, new_speed_increase]
+	
+	description_label.text = enhanced_description
 
 
 func on_gui_input(event: InputEvent):

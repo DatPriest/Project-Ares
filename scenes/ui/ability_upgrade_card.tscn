@@ -260,3 +260,4 @@ theme_type_variation = &"BlueOutlineLabel"
 text = "Description HEre could be the whole description for testing purposes"
 horizontal_alignment = 1
 autowrap_mode = 2
+bbcode_enabled = true

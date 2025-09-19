@@ -30,23 +30,24 @@ func _ready() -> void:
 		push_error("Failed to initialize Steam. Multiplayer features will be disabled.")
 		return
 	
-	# Connect Steam callbacks
-	if Steam.has_signal("lobby_created"):
-		Steam.lobby_created.connect(_on_lobby_created)
-		Steam.lobby_match_list.connect(_on_lobby_match_list)
-		Steam.lobby_joined.connect(_on_lobby_joined)
-		Steam.lobby_join_requested.connect(_on_lobby_join_requested)
-		Steam.lobby_data_update.connect(_on_lobby_data_update)
-		Steam.lobby_chat_update.connect(_on_lobby_chat_update)
-		Steam.join_requested.connect(_on_join_requested)
-	
-	# Get Steam user info
-	if Steam.loggedOn():
-		steam_username = Steam.getPersonaName()
-		steam_id = Steam.getSteamID()
-		print("Steam initialized - User: ", steam_username, " ID: ", steam_id)
-	else:
-		push_error("Steam user not logged in")
+	# Connect Steam callbacks - only if Steam singleton is available
+	if Engine.has_singleton("Steam") and Steam:
+		if Steam.has_signal("lobby_created"):
+			Steam.lobby_created.connect(_on_lobby_created)
+			Steam.lobby_match_list.connect(_on_lobby_match_list)
+			Steam.lobby_joined.connect(_on_lobby_joined)
+			Steam.lobby_join_requested.connect(_on_lobby_join_requested)
+			Steam.lobby_data_update.connect(_on_lobby_data_update)
+			Steam.lobby_chat_update.connect(_on_lobby_chat_update)
+			Steam.join_requested.connect(_on_join_requested)
+		
+		# Get Steam user info
+		if Steam.loggedOn():
+			steam_username = Steam.getPersonaName()
+			steam_id = Steam.getSteamID()
+			print("Steam initialized - User: ", steam_username, " ID: ", steam_id)
+		else:
+			push_error("Steam user not logged in")
 
 func _initialize_steam() -> bool:
 	# Check if Steam is available (this will be false in our development environment)
@@ -55,10 +56,11 @@ func _initialize_steam() -> bool:
 		_setup_mock_steam()
 		return true
 	
-	# Real Steam initialization
-	if not Steam:
+	# Real Steam initialization - check if Steam singleton exists
+	if not Engine.has_singleton("Steam"):
 		print("Steam singleton not found")
-		return false
+		_setup_mock_steam()
+		return true
 	
 	# Initialize Steam
 	var initialize_result: Dictionary = Steam.steamInitEx(false, steam_app_id)
@@ -77,7 +79,7 @@ func _setup_mock_steam():
 
 # Lobby Creation
 func create_lobby(lobby_type: int = LOBBY_TYPE_FRIENDS_ONLY, max_members: int = MAX_PLAYERS) -> void:
-	if not Steam and not _is_mock_mode():
+	if not Engine.has_singleton("Steam") and not _is_mock_mode():
 		push_error("Steam not initialized")
 		return
 	
@@ -121,7 +123,7 @@ func _on_lobby_created(connect_result: int, lobby_id: int) -> void:
 
 # Lobby Search and Join
 func search_lobbies() -> void:
-	if not Steam and not _is_mock_mode():
+	if not Engine.has_singleton("Steam") and not _is_mock_mode():
 		return
 	
 	print("Searching for lobbies...")
@@ -182,7 +184,7 @@ func _on_lobby_match_list(lobbies: Array) -> void:
 	GameEvents.lobbies_found.emit(lobby_list)
 
 func join_lobby(lobby_id: int) -> void:
-	if not Steam and not _is_mock_mode():
+	if not Engine.has_singleton("Steam") and not _is_mock_mode():
 		return
 	
 	print("Joining lobby: ", lobby_id)
@@ -304,7 +306,7 @@ func start_game() -> void:
 
 func _setup_steam_networking() -> void:
 	# Create Steam multiplayer peer or fallback to ENet for development
-	if Engine.has_singleton("Steam") and Steam:
+	if Engine.has_singleton("Steam") and Steam and ClassDB.class_exists("SteamMultiplayerPeer"):
 		steam_peer = SteamMultiplayerPeer.new()
 		
 		if is_host:
@@ -388,5 +390,5 @@ func get_player_count() -> int:
 
 # Called by Godot
 func _process(_delta: float) -> void:
-	if Steam and not _is_mock_mode():
+	if Engine.has_singleton("Steam") and not _is_mock_mode():
 		Steam.run_callbacks()

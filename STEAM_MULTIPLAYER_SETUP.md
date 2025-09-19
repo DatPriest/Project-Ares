@@ -100,16 +100,33 @@ When Steam is available, full Steam integration is used:
 ## Troubleshooting
 
 ### Common Issues
-1. **"Steam not available"**: Install GodotSteam plugin and Steam SDK
-2. **Connection failed**: Check firewall settings and Steam connectivity
-3. **Lobby not found**: Ensure both players have the same game version
+
+1. **"Identifier Steam not declared"**: This error indicates that the GodotSteam plugin is not properly configured:
+   - Ensure you're using a GodotSteam-enabled Godot build (the templates in `addons/godotsteam/`)
+   - For development without Steam, the system automatically falls back to mock functionality
+   - The Steam singleton is only available with proper GodotSteam integration
+
+2. **"Identifier SteamMultiplayerPeer not declared"**: This error indicates the steam-multiplayer-peer GDExtension is not loaded:
+   - Verify the `addons/steam-multiplayer-peer/` directory contains all required libraries
+   - Check that the project.godot has GDExtension loading enabled
+   - The system falls back to ENet networking when SteamMultiplayerPeer is unavailable
+
+3. **"Steam not available"**: Normal behavior in development environment
+   - The system automatically uses mock Steam functionality
+   - ENet networking is used instead of Steam networking
+   - Full Steam features require a GodotSteam build
+
+4. **Connection failed**: Check firewall settings and Steam connectivity
+
+5. **Lobby not found**: Ensure both players have the same game version
 
 ### Debug Information
 The system outputs debug information to the console:
-- Steam initialization status
+- Steam initialization status (real vs mock)
 - Lobby creation/join events
-- Player connection/disconnection
+- Player connection/disconnection  
 - Network synchronization events
+- Fallback mechanism activation
 
 ## Future Enhancements
 

@@ -169,12 +169,16 @@ func test_upgrade_integration():
 	
 	# Test weapon system manager initialization
 	var all_instances = weapon_system_manager.get_all_weapon_instances()
-	assert(all_instances.size() > 0, "Should have default weapon instances")
+	assert(all_instances.size() == 0, "Should have no weapon instances initially (lazy loading)")
 	
-	# Test getting specific weapon instance
+	# Test getting specific weapon instance (should create it lazily)
 	var sword_instance = weapon_system_manager.get_weapon_instance("sword")
 	assert(sword_instance != null, "Should have sword instance")
 	assert(sword_instance.base_weapon_id == "sword", "Sword instance should be for sword")
+	
+	# Now should have one instance
+	all_instances = weapon_system_manager.get_all_weapon_instances()
+	assert(all_instances.size() == 1, "Should now have 1 weapon instance")
 	
 	# Test weapon DPS retrieval
 	var sword_dps = weapon_system_manager.get_weapon_dps("sword")
@@ -183,7 +187,7 @@ func test_upgrade_integration():
 	var total_dps = weapon_system_manager.get_total_dps()
 	assert(total_dps > 0, "Total DPS should be positive")
 	
-	add_result("✓ Weapon system integrates with upgrade management")
+	add_result("✓ Weapon system integrates with upgrade management (with lazy loading)")
 
 func test_game_events_integration():
 	"""Test GameEvents integration"""

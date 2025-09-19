@@ -13,9 +13,18 @@ var rarity_table: WeightedTable
 var condition_table: WeightedTable
 
 func _init() -> void:
-	_load_rarity_resources()
-	_load_condition_resources()
-	_setup_weighted_tables()
+	# Initialize empty arrays - resources will be loaded lazily
+	rarity_resources = []
+	condition_resources = []
+
+func _ensure_resources_loaded() -> void:
+	"""Ensure rarity and condition resources are loaded"""
+	if rarity_resources.is_empty():
+		_load_rarity_resources()
+	if condition_resources.is_empty():
+		_load_condition_resources()
+	if not rarity_table or not condition_table:
+		_setup_weighted_tables()
 
 func _load_rarity_resources() -> void:
 	"""Load all rarity resources from the file system"""
@@ -112,6 +121,8 @@ func _setup_weighted_tables() -> void:
 
 func generate_weapon_instance(weapon_id: String, force_rarity: WeaponRarity = null, force_condition: WeaponCondition = null) -> WeaponInstance:
 	"""Generate a new weapon instance with random or specified rarity and condition"""
+	_ensure_resources_loaded()
+	
 	var rarity = force_rarity if force_rarity else rarity_table.pick_item() as WeaponRarity
 	var condition = force_condition if force_condition else condition_table.pick_item() as WeaponCondition
 	
@@ -125,6 +136,8 @@ func generate_weapon_instance(weapon_id: String, force_rarity: WeaponRarity = nu
 
 func generate_weapon_drop(weapon_id: String, player_level: int = 1) -> WeaponInstance:
 	"""Generate a weapon drop with level-based rarity scaling"""
+	_ensure_resources_loaded()
+	
 	# Higher player levels have better chances at rare weapons
 	var modified_rarity_table = WeightedTable.new()
 	
@@ -142,6 +155,8 @@ func generate_weapon_drop(weapon_id: String, player_level: int = 1) -> WeaponIns
 
 func get_rarity_by_id(rarity_id: String) -> WeaponRarity:
 	"""Get rarity resource by ID"""
+	_ensure_resources_loaded()
+	
 	for rarity in rarity_resources:
 		if rarity.id == rarity_id:
 			return rarity
@@ -149,6 +164,8 @@ func get_rarity_by_id(rarity_id: String) -> WeaponRarity:
 
 func get_condition_by_id(condition_id: String) -> WeaponCondition:
 	"""Get condition resource by ID"""
+	_ensure_resources_loaded()
+	
 	for condition in condition_resources:
 		if condition.id == condition_id:
 			return condition
@@ -156,10 +173,12 @@ func get_condition_by_id(condition_id: String) -> WeaponCondition:
 
 func get_all_rarities() -> Array[WeaponRarity]:
 	"""Get all available rarity resources"""
+	_ensure_resources_loaded()
 	return rarity_resources.duplicate()
 
 func get_all_conditions() -> Array[WeaponCondition]:
 	"""Get all available condition resources"""
+	_ensure_resources_loaded()
 	return condition_resources.duplicate()
 
 func validate_weapon_instance(weapon_instance: WeaponInstance) -> bool:

@@ -12,24 +12,14 @@ var discovered_rarities: Array[String] = []
 func _ready() -> void:
 	weapon_factory = WeaponFactory.new()
 	_connect_game_events()
-	_initialize_default_weapons()
+	# Note: Removed _initialize_default_weapons() to prevent excessive UID generation
+	# Weapon instances will be created lazily when first needed
 
 func _connect_game_events() -> void:
 	"""Connect to relevant game events"""
 	GameEvents.ability_upgrade_added.connect(_on_ability_upgrade_added)
 	GameEvents.weapon_instance_created.connect(_on_weapon_instance_created)
 
-func _initialize_default_weapons() -> void:
-	"""Initialize default weapon instances for existing weapons"""
-	var default_weapons = ["sword", "axe", "bow", "magic_staff", "shield", "double_sword"]
-	
-	for weapon_id in default_weapons:
-		if not player_weapon_instances.has(weapon_id):
-			# Create a common rarity weapon instance for existing weapons
-			var common_rarity = weapon_factory.get_rarity_by_id("common")
-			var good_condition = weapon_factory.get_condition_by_id("good")
-			var weapon_instance = WeaponInstance.new(weapon_id, common_rarity, good_condition)
-			player_weapon_instances[weapon_id] = weapon_instance
 
 func _on_ability_upgrade_added(upgrade: AbilityUpgrade, current_upgrades: Dictionary) -> void:
 	"""Handle weapon upgrades from the existing upgrade system"""
@@ -71,6 +61,10 @@ func _extract_weapon_id_from_upgrade(upgrade: AbilityUpgrade) -> String:
 
 func _create_weapon_instance_for_upgrade(upgrade: AbilityUpgrade, weapon_id: String) -> WeaponInstance:
 	"""Create a weapon instance when first acquiring a weapon"""
+	# Check if weapon instance already exists (from lazy creation)
+	if player_weapon_instances.has(weapon_id):
+		return player_weapon_instances[weapon_id]
+	
 	# For new weapon acquisitions, generate a random rarity/condition
 	var player_level = _get_current_player_level()
 	var weapon_instance = weapon_factory.generate_weapon_drop(weapon_id, player_level)
@@ -137,8 +131,16 @@ func _upgrade_weapon_stat(weapon_instance: WeaponInstance, stat_type: WeaponStat
 	GameEvents.emit_weapon_instance_upgraded(weapon_instance, upgrade_quantity)
 
 func get_weapon_instance(weapon_id: String) -> WeaponInstance:
-	"""Get weapon instance by weapon ID"""
-	return player_weapon_instances.get(weapon_id, null)
+	"""Get weapon instance by weapon ID, creating it lazily if needed"""
+	if not player_weapon_instances.has(weapon_id):
+		# Create weapon instance lazily with common rarity and good condition
+		var common_rarity = weapon_factory.get_rarity_by_id("common")
+		var good_condition = weapon_factory.get_condition_by_id("good")
+		var weapon_instance = WeaponInstance.new(weapon_id, common_rarity, good_condition)
+		player_weapon_instances[weapon_id] = weapon_instance
+		print("Lazily created weapon instance for: ", weapon_id)
+	
+	return player_weapon_instances[weapon_id]
 
 func get_all_weapon_instances() -> Array[WeaponInstance]:
 	"""Get all player weapon instances"""

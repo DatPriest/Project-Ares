@@ -98,6 +98,21 @@ Du möchtest bei der Entwicklung helfen? Großartig\!
     git clone https://github.com/DEIN_BENUTZERNAME/project-ares.git
     ```
 2.  **Öffne das Projekt** in der Godot Engine (Version 4.2 oder neuer).
-3.  **Lese die Anweisungen für Mitwirkende:** Bevor du Code schreibst, wirf einen Blick in unsere `.github/copilot/instructions.md`, um dich mit unseren Code-Standards und der Projektarchitektur vertraut zu machen.
+3.  **Lese die Anweisungen für Mitwirkende:** Bevor du Code schreibst, wirf einen Blick in unsere `.github/copilot-instructions.md`, um dich mit unseren Code-Standards und der Projektarchitektur vertraut zu machen.
+4.  **KI-Unterstützung einrichten (optional):** Für erweiterte Entwicklungsunterstützung mit KI-Agenten, siehe `agents.md` und führe `.context7/init.sh` aus.
+
+### 🤖 KI-Entwicklungsunterstützung
+
+Das Projekt nutzt Context7 und MCP (Model Context Protocol) Server für intelligente Entwicklungsunterstützung:
+
+* **`agents.md`** - Umfassende Dokumentation der KI-Agent-Konfigurationen
+* **`.context7/`** - Context7-Konfiguration für Godot-spezifische Entwicklungsunterstützung
+* **Automatisierte Workflows** - KI-unterstützte Komponenten-Entwicklung, Balance-Testing und Performance-Optimierung
+
+```bash
+# KI-Unterstützung initialisieren
+cd .context7
+./init.sh
+```
 
 Wir freuen uns über Pull Requests und Issue-Reports\!

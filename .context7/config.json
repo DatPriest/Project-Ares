@@ -1,0 +1,189 @@
+{
+  "project": {
+    "name": "Project Ares",
+    "type": "godot_game",
+    "version": "4.2",
+    "architecture": "component_based",
+    "genre": "survivor_roguelite",
+    "language": "gdscript"
+  },
+  "contexts": [
+    {
+      "name": "godot_development",
+      "description": "Godot Engine 4 specific development patterns",
+      "patterns": ["*.gd", "*.tscn", "*.tres", "*.cs"],
+      "priority": "high",
+      "rules": [
+        "enforce_static_typing",
+        "component_architecture",
+        "event_driven_design",
+        "onready_annotation",
+        "export_typing"
+      ],
+      "conventions": {
+        "naming": {
+          "classes": "PascalCase",
+          "files": "snake_case", 
+          "variables": "snake_case",
+          "functions": "snake_case",
+          "signals": "past_tense_snake_case",
+          "constants": "UPPER_SNAKE_CASE"
+        },
+        "architecture": {
+          "components": "prefer_composition_over_inheritance",
+          "events": "use_game_events_singleton",
+          "resources": "use_resource_based_configuration"
+        }
+      }
+    },
+    {
+      "name": "game_design",
+      "description": "Game design and balancing patterns",
+      "patterns": [
+        "resources/upgrades/*",
+        "resources/enemy_data/*", 
+        "scenes/abilities/*",
+        "scenes/enemy/*"
+      ],
+      "priority": "medium",
+      "rules": [
+        "balance_validation",
+        "progression_curves",
+        "multiplayer_compatibility",
+        "performance_consideration"
+      ],
+      "balance_guidelines": {
+        "progression": "exponential_xp_curve",
+        "damage_scaling": "linear_with_multipliers",
+        "enemy_health": "wave_based_scaling"
+      }
+    },
+    {
+      "name": "component_system",
+      "description": "Component-based architecture patterns",
+      "patterns": ["scenes/component/*"],
+      "priority": "high",
+      "rules": [
+        "single_responsibility",
+        "loose_coupling",
+        "event_communication",
+        "reusable_design"
+      ],
+      "component_types": [
+        "HealthComponent",
+        "VelocityComponent", 
+        "HitboxComponent",
+        "HurtboxComponent",
+        "DamageComponent",
+        "VialDropComponent",
+        "DeathComponent"
+      ]
+    },
+    {
+      "name": "ui_and_menus",
+      "description": "User interface and menu systems",
+      "patterns": ["scenes/ui/*"],
+      "priority": "medium",
+      "rules": [
+        "responsive_design",
+        "accessibility_compliance",
+        "performance_optimization",
+        "modular_ui_components"
+      ]
+    },
+    {
+      "name": "testing_and_benchmarks",
+      "description": "Testing and performance benchmarking",
+      "patterns": ["scenes/test/*", "*test*.gd"],
+      "priority": "medium", 
+      "rules": [
+        "comprehensive_coverage",
+        "performance_validation",
+        "automated_testing",
+        "benchmark_integration"
+      ]
+    }
+  ],
+  "mcp_servers": {
+    "godot": {
+      "name": "godot-mcp-server",
+      "command": "godot-mcp-server",
+      "args": ["--project", "."],
+      "description": "Godot Engine 4 development assistance",
+      "capabilities": [
+        "scene_analysis",
+        "gdscript_parsing",
+        "resource_dependencies",
+        "performance_profiling"
+      ]
+    },
+    "gamedev": {
+      "name": "gamedev-mcp-server",
+      "command": "gamedev-mcp-server",
+      "args": ["--genre", "survivor", "--engine", "godot"],
+      "description": "Game development patterns and best practices",
+      "capabilities": [
+        "balance_analysis",
+        "progression_validation",
+        "design_patterns",
+        "multiplayer_guidance"
+      ]
+    },
+    "performance": {
+      "name": "performance-mcp-server", 
+      "command": "performance-mcp-server",
+      "args": ["--benchmark-dir", "scenes/test/dps_benchmark"],
+      "description": "Performance monitoring and optimization",
+      "capabilities": [
+        "dps_analysis",
+        "memory_profiling",
+        "frame_rate_monitoring",
+        "optimization_suggestions"
+      ]
+    }
+  },
+  "workflows": {
+    "component_development": {
+      "steps": [
+        "analyze_existing_patterns",
+        "suggest_component_structure", 
+        "validate_integration",
+        "provide_testing_strategy"
+      ]
+    },
+    "enemy_design": {
+      "steps": [
+        "analyze_balance_requirements",
+        "suggest_stats_and_abilities",
+        "provide_implementation_guidance",
+        "create_benchmark_scenarios"
+      ]
+    },
+    "performance_optimization": {
+      "steps": [
+        "identify_bottlenecks",
+        "suggest_optimizations",
+        "evaluate_gameplay_impact",
+        "validate_through_benchmarks"
+      ]
+    }
+  },
+  "quality_gates": {
+    "code_review": {
+      "static_typing": "required",
+      "naming_conventions": "enforced",
+      "component_architecture": "validated",
+      "performance_impact": "assessed"
+    },
+    "design_review": {
+      "balance_validation": "required",
+      "progression_consistency": "enforced", 
+      "multiplayer_compatibility": "validated"
+    },
+    "performance_review": {
+      "dps_benchmarks": "required",
+      "memory_usage": "monitored",
+      "frame_rate": "validated"
+    }
+  }
+}

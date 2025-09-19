@@ -21,3 +21,13 @@ obj/
 /exe/*
 /build/
 .vs/
+
+# Context7 and MCP temporary files
+.context7/logs/
+.context7/cache/
+.context7/temp/
+*.context7.tmp
+
+# MCP server logs and temporary data
+mcp-*.log
+mcp-temp/

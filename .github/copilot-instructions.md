@@ -119,3 +119,68 @@ Verwende `Resource`-basierte Skripte (`.gd`-Dateien, die von `Resource` erben), 
   * **Issues:** Wenn du an einem GitHub Issue arbeitest, referenziere es in deinen Commits (z.B., `feat: Implement Goblin Archer (fixes #1)`).
 
 Wenn du den Auftrag erhältst, neue Issues zu erstellen (wie in Issue #5 beschrieben), analysiere den Code gemäß den dortigen Richtlinien und erstelle detaillierte, umsetzbare Issues.
+
+## 5. KI-Assistenten Integration (Context7 & MCP)
+
+Das Projekt nutzt Context7 und Model Context Protocol (MCP) Server für erweiterte KI-Unterstützung während der Entwicklung.
+
+### 5.1. Context7 Integration
+
+Context7 bietet projektspezifische Kontextunterstützung:
+
+* **Konfiguration:** `.context7/config.json` definiert projektspezifische Kontexte und Regeln
+* **Workflows:** Automatisierte Entwicklungsworkflows für Komponenten, Gegner und Performance-Optimierung
+* **Qualitätssicherung:** Automatische Code-Reviews und Architektur-Validierung
+
+### 5.2. MCP Server Konfiguration
+
+Mehrere spezialisierte MCP Server unterstützen verschiedene Entwicklungsaspekte:
+
+* **`godot-dev`:** Godot Engine 4 spezifische Entwicklungsunterstützung
+* **`gamedev-patterns`:** Spieldesign-Muster und Balancing-Unterstützung  
+* **`performance-monitor`:** Performance-Monitoring und Optimierungsvorschläge
+* **`code-quality`:** Code-Qualität und statische Analyse
+
+### 5.3. Workflow-Integration
+
+Die KI-Assistenten sind in Standard-Entwicklungsworkflows integriert:
+
+```gdscript
+# Beispiel: Komponenten-Entwicklung mit KI-Unterstützung
+# Die KI analysiert automatisch bestehende Komponenten-Muster
+# und schlägt optimale Strukturen vor
+
+extends Node
+class_name NewComponent
+
+# KI-validierte Typisierung und Naming-Konventionen
+@export var component_data: ComponentResource
+@onready var target_node: Node2D = $"../TargetNode"
+
+# KI-unterstützte Architektur-Validierung
+func _ready() -> void:
+    # Event-driven Design wird automatisch validiert
+    GameEvents.component_initialized.connect(_on_component_ready)
+```
+
+### 5.4. Performance-Integration
+
+Die KI-Systeme sind mit dem bestehenden DPS-Benchmark-System integriert:
+
+* Automatische Performance-Regression-Erkennung
+* Optimierungsvorschläge basierend auf Benchmark-Ergebnissen
+* Balance-Validierung durch KI-gestützte Analyse
+
+### 5.5. Nutzungsrichtlinien
+
+**Für Entwickler:**
+* Nutze KI-Assistenten für Code-Reviews und Architektur-Entscheidungen
+* Lass Performance-Optimierungen durch KI-Analyse unterstützen
+* Verwende KI-generierte Test-Strategien für neue Komponenten
+
+**Für Designer:**
+* Nutze KI-unterstützte Balance-Analyse für neue Fähigkeiten
+* Lass Progression-Kurven durch KI validieren
+* Berücksichtige KI-Feedback zu Multiplayer-Auswirkungen
+
+**Siehe auch:** `agents.md` für detaillierte Informationen zu KI-Agent-Konfigurationen und Workflows.

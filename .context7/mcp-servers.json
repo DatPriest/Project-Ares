@@ -1,0 +1,100 @@
+{
+  "mcpServers": {
+    "godot-dev": {
+      "command": "godot-mcp-server",
+      "args": ["--project-path", ".", "--engine-version", "4.2"],
+      "env": {
+        "GODOT_PROJECT_TYPE": "2d_survivor",
+        "GODOT_ARCHITECTURE": "component_based"
+      },
+      "capabilities": [
+        "scene_analysis",
+        "gdscript_parsing", 
+        "resource_management",
+        "component_validation"
+      ],
+      "description": "Godot Engine 4 development assistance with component architecture support"
+    },
+    "gamedev-patterns": {
+      "command": "gamedev-mcp-server",
+      "args": ["--genre", "survivor_roguelite", "--engine", "godot"],
+      "env": {
+        "GAME_PATTERNS": "component_entity_system",
+        "MULTIPLAYER_TYPE": "authoritative_server"
+      },
+      "capabilities": [
+        "design_patterns",
+        "balance_analysis",
+        "progression_validation",
+        "multiplayer_architecture"
+      ],
+      "description": "Game development patterns and best practices for survivor games"
+    },
+    "performance-monitor": {
+      "command": "performance-mcp-server",
+      "args": ["--benchmark-path", "scenes/test/dps_benchmark", "--target-fps", "60"],
+      "env": {
+        "PERFORMANCE_PROFILE": "2d_game",
+        "OPTIMIZATION_LEVEL": "production"
+      },
+      "capabilities": [
+        "dps_benchmarking",
+        "memory_profiling",
+        "frame_analysis",
+        "optimization_suggestions"
+      ],
+      "description": "Performance monitoring and optimization for 2D games"
+    },
+    "code-quality": {
+      "command": "code-quality-mcp-server",
+      "args": ["--language", "gdscript", "--style-guide", "project_ares"],
+      "env": {
+        "TYPING_ENFORCEMENT": "strict",
+        "ARCHITECTURE_VALIDATION": "enabled"
+      },
+      "capabilities": [
+        "static_analysis",
+        "style_enforcement",
+        "architecture_validation",
+        "refactoring_suggestions"
+      ],
+      "description": "Code quality enforcement and static analysis for GDScript"
+    },
+    "git-workflow": {
+      "command": "git-mcp-server",
+      "args": ["--project", "project-ares"],
+      "env": {
+        "COMMIT_CONVENTION": "conventional_commits",
+        "BRANCH_STRATEGY": "feature_branch"
+      },
+      "capabilities": [
+        "commit_analysis",
+        "branch_management",
+        "pr_validation",
+        "issue_tracking"
+      ],
+      "description": "Git workflow and project management assistance"
+    }
+  },
+  "server_groups": {
+    "development": ["godot-dev", "code-quality", "performance-monitor"],
+    "design": ["gamedev-patterns", "performance-monitor"],
+    "testing": ["performance-monitor", "code-quality"],
+    "deployment": ["code-quality", "git-workflow"]
+  },
+  "context_mappings": {
+    "*.gd": ["godot-dev", "code-quality"],
+    "*.tscn": ["godot-dev", "gamedev-patterns"],
+    "*.tres": ["godot-dev", "gamedev-patterns"],
+    "scenes/component/*": ["godot-dev", "code-quality", "gamedev-patterns"],
+    "scenes/test/*": ["performance-monitor", "code-quality"],
+    "resources/upgrades/*": ["gamedev-patterns", "performance-monitor"],
+    "resources/enemy_data/*": ["gamedev-patterns", "performance-monitor"]
+  },
+  "workflow_triggers": {
+    "pre_commit": ["code-quality"],
+    "pre_push": ["code-quality", "performance-monitor"],
+    "pr_review": ["code-quality", "gamedev-patterns", "performance-monitor"],
+    "release": ["performance-monitor", "git-workflow"]
+  }
+}

@@ -1,0 +1,305 @@
+{
+  "workflows": {
+    "component_development": {
+      "name": "Component Development Workflow",
+      "description": "Workflow for creating and maintaining component-based game objects",
+      "triggers": [
+        "file_created:scenes/component/*.gd",
+        "file_modified:scenes/component/*.gd"
+      ],
+      "steps": [
+        {
+          "name": "analyze_existing_patterns",
+          "mcp_server": "godot-dev",
+          "action": "analyze_component_patterns",
+          "parameters": {
+            "scope": "scenes/component/",
+            "pattern_types": ["health", "velocity", "damage", "hitbox"]
+          }
+        },
+        {
+          "name": "validate_component_structure", 
+          "mcp_server": "code-quality",
+          "action": "validate_structure",
+          "parameters": {
+            "enforce_typing": true,
+            "check_naming": true,
+            "validate_exports": true
+          }
+        },
+        {
+          "name": "suggest_integration_points",
+          "mcp_server": "gamedev-patterns",
+          "action": "suggest_integrations",
+          "parameters": {
+            "architecture": "component_based",
+            "existing_components": "auto_detect"
+          }
+        },
+        {
+          "name": "generate_test_strategy",
+          "mcp_server": "performance-monitor",
+          "action": "create_test_plan",
+          "parameters": {
+            "test_types": ["unit", "integration", "performance"],
+            "benchmark_integration": true
+          }
+        }
+      ],
+      "success_criteria": [
+        "static_typing_complete",
+        "naming_conventions_followed",
+        "component_integration_validated",
+        "test_coverage_adequate"
+      ]
+    },
+    "enemy_design": {
+      "name": "Enemy Design and Implementation Workflow",
+      "description": "Workflow for creating balanced and performant enemy types",
+      "triggers": [
+        "file_created:scenes/enemy/*.tscn",
+        "file_created:resources/enemy_data/*.tres"
+      ],
+      "steps": [
+        {
+          "name": "analyze_balance_requirements",
+          "mcp_server": "gamedev-patterns",
+          "action": "analyze_balance",
+          "parameters": {
+            "existing_enemies": "resources/enemy_data/",
+            "progression_curve": "exponential",
+            "difficulty_scaling": "wave_based"
+          }
+        },
+        {
+          "name": "suggest_stats_and_abilities",
+          "mcp_server": "gamedev-patterns", 
+          "action": "generate_enemy_stats",
+          "parameters": {
+            "balance_target": "auto_calculated",
+            "ability_complexity": "medium",
+            "performance_budget": "2d_optimized"
+          }
+        },
+        {
+          "name": "validate_implementation",
+          "mcp_server": "godot-dev",
+          "action": "validate_enemy_structure",
+          "parameters": {
+            "required_components": ["HealthComponent", "VelocityComponent", "HurtboxComponent"],
+            "performance_checks": true
+          }
+        },
+        {
+          "name": "create_benchmark_scenario",
+          "mcp_server": "performance-monitor",
+          "action": "generate_benchmark",
+          "parameters": {
+            "test_scenarios": ["single_enemy", "horde_test", "boss_fight"],
+            "performance_targets": {"fps": 60, "memory": "64mb"}
+          }
+        }
+      ],
+      "success_criteria": [
+        "balance_validated",
+        "performance_targets_met",
+        "component_structure_correct",
+        "benchmark_scenarios_created"
+      ]
+    },
+    "ability_system_development": {
+      "name": "Ability System Development Workflow",
+      "description": "Workflow for creating and balancing player abilities",
+      "triggers": [
+        "file_created:scenes/abilities/*.gd",
+        "file_created:resources/upgrades/*.tres"
+      ],
+      "steps": [
+        {
+          "name": "analyze_existing_abilities",
+          "mcp_server": "gamedev-patterns",
+          "action": "analyze_ability_ecosystem",
+          "parameters": {
+            "upgrade_paths": "resources/upgrades/",
+            "synergy_detection": true,
+            "balance_analysis": true
+          }
+        },
+        {
+          "name": "validate_ability_structure",
+          "mcp_server": "godot-dev",
+          "action": "validate_ability_implementation",
+          "parameters": {
+            "damage_calculation": "standardized",
+            "cooldown_management": "component_based",
+            "visual_effects": "optimized"
+          }
+        },
+        {
+          "name": "performance_impact_analysis",
+          "mcp_server": "performance-monitor",
+          "action": "analyze_ability_performance",
+          "parameters": {
+            "projectile_count": "monitor",
+            "effect_complexity": "evaluate",
+            "memory_usage": "track"
+          }
+        },
+        {
+          "name": "balance_validation",
+          "mcp_server": "gamedev-patterns",
+          "action": "validate_balance",
+          "parameters": {
+            "dps_targets": "calculated",
+            "progression_fit": "validate",
+            "multiplayer_impact": "assess"
+          }
+        }
+      ],
+      "success_criteria": [
+        "ability_balance_validated",
+        "performance_impact_acceptable",
+        "integration_successful",
+        "upgrade_paths_logical"
+      ]
+    },
+    "performance_optimization": {
+      "name": "Performance Optimization Workflow",
+      "description": "Workflow for identifying and resolving performance bottlenecks",
+      "triggers": [
+        "performance_threshold_exceeded",
+        "benchmark_regression_detected",
+        "manual_optimization_request"
+      ],
+      "steps": [
+        {
+          "name": "identify_bottlenecks",
+          "mcp_server": "performance-monitor",
+          "action": "profile_performance",
+          "parameters": {
+            "profiling_duration": "60s",
+            "scenarios": ["normal_gameplay", "peak_load", "stress_test"],
+            "metrics": ["fps", "memory", "cpu", "gpu"]
+          }
+        },
+        {
+          "name": "analyze_optimization_opportunities",
+          "mcp_server": "godot-dev",
+          "action": "suggest_optimizations",
+          "parameters": {
+            "engine_specific": true,
+            "2d_optimizations": true,
+            "component_optimizations": true
+          }
+        },
+        {
+          "name": "evaluate_gameplay_impact",
+          "mcp_server": "gamedev-patterns",
+          "action": "assess_gameplay_impact",
+          "parameters": {
+            "balance_preservation": true,
+            "feature_completeness": true,
+            "player_experience": "maintain"
+          }
+        },
+        {
+          "name": "validate_optimizations",
+          "mcp_server": "performance-monitor",
+          "action": "benchmark_optimizations",
+          "parameters": {
+            "before_after_comparison": true,
+            "regression_testing": true,
+            "performance_targets": "project_defined"
+          }
+        }
+      ],
+      "success_criteria": [
+        "performance_targets_met",
+        "no_functionality_regression",
+        "balance_maintained", 
+        "code_quality_preserved"
+      ]
+    },
+    "multiplayer_integration": {
+      "name": "Multiplayer Integration Workflow",
+      "description": "Workflow for implementing and testing multiplayer features",
+      "triggers": [
+        "file_modified:*multiplayer*",
+        "rpc_function_added",
+        "network_sync_implemented"
+      ],
+      "steps": [
+        {
+          "name": "analyze_multiplayer_architecture",
+          "mcp_server": "gamedev-patterns",
+          "action": "validate_multiplayer_design",
+          "parameters": {
+            "architecture_type": "authoritative_server",
+            "synchronization_strategy": "event_based",
+            "conflict_resolution": "server_authority"
+          }
+        },
+        {
+          "name": "validate_network_code",
+          "mcp_server": "code-quality",
+          "action": "analyze_network_code",
+          "parameters": {
+            "rpc_validation": true,
+            "state_synchronization": true,
+            "error_handling": true
+          }
+        },
+        {
+          "name": "performance_impact_assessment",
+          "mcp_server": "performance-monitor",
+          "action": "assess_network_performance",
+          "parameters": {
+            "bandwidth_usage": "monitor",
+            "latency_impact": "measure",
+            "cpu_overhead": "evaluate"
+          }
+        },
+        {
+          "name": "multiplayer_testing_strategy",
+          "mcp_server": "performance-monitor",
+          "action": "create_multiplayer_tests",
+          "parameters": {
+            "player_counts": [2, 4, 8, 16],
+            "network_conditions": ["local", "lan", "internet"],
+            "stress_scenarios": true
+          }
+        }
+      ],
+      "success_criteria": [
+        "network_architecture_sound",
+        "performance_acceptable",
+        "synchronization_reliable",
+        "error_handling_robust"
+      ]
+    }
+  },
+  "global_settings": {
+    "timeout_seconds": 300,
+    "retry_attempts": 3,
+    "parallel_execution": false,
+    "notification_channels": ["console", "ide_integration"],
+    "logging_level": "info"
+  },
+  "integration_points": {
+    "godot_editor": {
+      "enabled": true,
+      "dock_integration": true,
+      "build_hooks": true
+    },
+    "git_hooks": {
+      "pre_commit": ["code-quality"],
+      "pre_push": ["performance-monitor"],
+      "post_merge": ["dependency_check"]
+    },
+    "ci_cd": {
+      "github_actions": true,
+      "automated_testing": true,
+      "performance_regression_detection": true
+    }
+  }
+}

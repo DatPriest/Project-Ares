@@ -9,6 +9,7 @@ var base_damage: float = 4.0
 var additional_damage_percent: float = 1.0
 var base_wait_time: float
 var cached_player_position: Vector2 = Vector2.ZERO
+var cached_enemies: Array[Node2D] = []
 var arrow_count: int = 1
 var arrow_speed: float = 400.0
 var has_flaming_arrows: bool = false
@@ -18,16 +19,20 @@ func _ready() -> void:
 	timer.timeout.connect(on_timer_timeout)
 	GameEvents.ability_upgrade_added.connect(on_ability_upgrade_added)
 	GameEvents.player_position_updated.connect(on_player_position_updated)
+	GameEvents.enemies_near_player_updated.connect(on_enemies_near_player_updated)
 
 func on_player_position_updated(player_position: Vector2) -> void:
 	cached_player_position = player_position
+
+func on_enemies_near_player_updated(enemies: Array[Node2D], player_position: Vector2) -> void:
+	cached_enemies = enemies
 
 func on_timer_timeout() -> void:
 	if cached_player_position == Vector2.ZERO:
 		return
 		
-	var enemies = get_tree().get_nodes_in_group("enemy")
-	enemies = enemies.filter(func(enemy: Node2D): 
+	# Use cached enemy list instead of expensive tree lookup
+	var enemies = cached_enemies.filter(func(enemy: Node2D): 
 		return enemy.global_position.distance_squared_to(cached_player_position) < pow(MAX_RANGE, 2)
 	)
 	

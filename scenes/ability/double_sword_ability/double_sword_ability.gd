@@ -6,29 +6,32 @@ const MAX_RADIUS = 100
 
 
 var base_rotation = Vector2.RIGHT
+var cached_player_position = Vector2.ZERO
 
 
-func _process(delta):
-	pass
+
 	
 	
 func _ready():
 	base_rotation = Vector2.RIGHT.rotated(randf_range(0, TAU))
+	
+	# Connect to player position updates for cached access
+	GameEvents.player_position_updated.connect(on_player_position_updated)
+	
 	var tween = create_tween()
 	tween.tween_method(tween_method, 0.0, 2.5, 4)
 	tween.tween_callback(queue_free)
+
+func on_player_position_updated(player_position: Vector2):
+	cached_player_position = player_position
 	
 func tween_method(rotations: float):
 	var percent = rotations / 2
 	var current_radius = percent * MAX_RADIUS
 	var current_direction = base_rotation.rotated(rotations * TAU)
 	
-	var root_position = Vector2.ZERO
-	var player = get_tree().get_first_node_in_group("player") as Node2D
-	
-	if player == null:
+	# Use cached player position instead of expensive tree lookup
+	if cached_player_position == Vector2.ZERO:
 		return
 	
-	root_position = player.global_position
-	
-	global_position = player.global_position + (current_direction * current_radius)
+	global_position = cached_player_position + (current_direction * current_radius)

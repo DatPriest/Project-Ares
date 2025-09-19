@@ -1,8 +1,7 @@
-[gd_scene load_steps=22 format=3 uid="uid://cuod48cesmd47"]
+[gd_scene load_steps=21 format=3 uid="uid://cuod48cesmd47"]
 
 [ext_resource type="Script" path="res://scenes/game_object/enemies/goblin_enemy/goblin_enemy.gd" id="1_ixeqm"]
 [ext_resource type="Script" path="res://scenes/component/velocity_component.gd" id="2_5scsa"]
-[ext_resource type="PackedScene" uid="uid://ie88omkcfji6" path="res://scenes/component/random_stream_player_2d_component.tscn" id="3_f3wuy"]
 [ext_resource type="AudioStream" uid="uid://b0mkcnihvr5rt" path="res://assets/audio/entity_sounds/footstep_carpet_000.ogg" id="4_7mbkt"]
 [ext_resource type="AudioStream" uid="uid://ucg011qjaw41" path="res://assets/audio/entity_sounds/footstep_carpet_001.ogg" id="5_hn0mu"]
 [ext_resource type="AudioStream" uid="uid://b2oc3yk4balr5" path="res://assets/audio/entity_sounds/footstep_carpet_002.ogg" id="6_tg6om"]
@@ -135,6 +134,7 @@ radius = 12.0
 collision_layer = 8
 collision_mask = 9
 script = ExtResource("1_ixeqm")
+hit_sounds = Array[AudioStream]([ExtResource("4_7mbkt"), ExtResource("5_hn0mu"), ExtResource("6_tg6om"), ExtResource("7_21yx8"), ExtResource("8_mc7f3")])
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -146,8 +146,7 @@ autoplay = "walk"
 script = ExtResource("2_5scsa")
 max_speed = 50
 
-[node name="HitRandomAudioPlayerComponent" parent="." instance=ExtResource("3_f3wuy")]
-streams = Array[AudioStream]([ExtResource("4_7mbkt"), ExtResource("5_hn0mu"), ExtResource("6_tg6om"), ExtResource("7_21yx8"), ExtResource("8_mc7f3")])
+
 
 [node name="HealthComponent" parent="." instance=ExtResource("9_0k3bv")]
 

@@ -1,9 +1,10 @@
 extends CharacterBody2D
 
+@export var hit_sounds: Array[AudioStream] = []
+
 @onready var velocity_component: VelocityComponent = $VelocityComponent
 @onready var vial_drop_component = $VialDropComponent
 @onready var health_component = $HealthComponent
-@onready var hit_random_audio_player_component = $HitRandomAudioPlayerComponent
 
 @onready var visuals = $Visuals
 
@@ -29,4 +30,5 @@ func _ready():
 	$HurtBoxComponent.hit.connect(on_hit)
 
 func on_hit():
-	hit_random_audio_player_component.play_random()
+	if hit_sounds.size() > 0:
+		AudioManager.play_sfx_random(hit_sounds, global_position)

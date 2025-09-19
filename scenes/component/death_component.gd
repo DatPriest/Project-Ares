@@ -2,7 +2,7 @@ extends Node2D
 
 @export var health_component: Node
 @export var sprite: Sprite2D
-@onready var hit_random_audio_player_component = $HitRandomAudioPlayerComponent
+@export var death_sounds: Array[AudioStream] = []
 
 var entities_layer: Node = null
 
@@ -28,4 +28,5 @@ func on_died():
 		push_warning("entities_layer not initialized. Death component could not be reparented.")
 	global_position = spawn_position
 	$AnimationPlayer.play("default")
-	hit_random_audio_player_component.play_random()
+	if death_sounds.size() > 0:
+		AudioManager.play_sfx_random(death_sounds, global_position)

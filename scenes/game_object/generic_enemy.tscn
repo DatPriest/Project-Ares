@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://b8x9qr4n5m7tp"]
+[gd_scene load_steps=24 format=3 uid="uid://b8x9qr4n5m7tp"]
 
 [ext_resource type="Script" path="res://scenes/game_object/generic_enemy.gd" id="1_generic"]
 [ext_resource type="PackedScene" uid="uid://dvho7o7f7skqi" path="res://scenes/component/health_component.tscn" id="2_health"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://cjglkxq1llsuk" path="res://scenes/component/velocity_component.tscn" id="4_velocity"]
 [ext_resource type="PackedScene" uid="uid://4dmmcb4gf27p" path="res://scenes/component/hit_flash_component.tscn" id="5_hitflash"]
 [ext_resource type="PackedScene" uid="uid://c52bce7ufitux" path="res://scenes/component/death_component.tscn" id="6_death"]
-[ext_resource type="PackedScene" uid="uid://ie88omkcfji6" path="res://scenes/component/random_stream_player_2d_component.tscn" id="7_audio"]
 [ext_resource type="PackedScene" uid="uid://dbf1mn3s1wi5q" path="res://scenes/component/hurt_box_component.tscn" id="8_hurtbox"]
 [ext_resource type="PackedScene" uid="uid://bynpki8hefdo8" path="res://scenes/component/drop_component.tscn" id="9_drop"]
 [ext_resource type="AudioStream" uid="uid://b0mkcnihvr5rt" path="res://assets/audio/entity_sounds/footstep_carpet_000.ogg" id="10_audio1"]
@@ -66,6 +65,7 @@ radius = 5.0
 collision_layer = 2
 collision_mask = 1
 script = ExtResource("1_generic")
+hit_sounds = Array[AudioStream]([ExtResource("10_audio1"), ExtResource("11_audio2"), ExtResource("12_audio3"), ExtResource("13_audio4"), ExtResource("14_audio5")])
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_health")]
 
@@ -82,8 +82,7 @@ sprite = NodePath("../Visuals/Sprite2D")
 health_component = NodePath("../HealthComponent")
 sprite = NodePath("../Visuals/Sprite2D")
 
-[node name="HitRandomAudioPlayerComponent" parent="." instance=ExtResource("7_audio")]
-streams = Array[AudioStream]([ExtResource("10_audio1"), ExtResource("11_audio2"), ExtResource("12_audio3"), ExtResource("13_audio4"), ExtResource("14_audio5")])
+
 
 [node name="HurtBoxComponent" parent="." instance=ExtResource("8_hurtbox")]
 collision_layer = 2

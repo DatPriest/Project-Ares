@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@export var hit_sounds: Array[AudioStream] = []
+
 @onready var damage_interval_timer = $DamageIntervalTimer 
 @onready var health_component = $HealthComponent
 @onready var health_bar = $HealthBar 
@@ -140,7 +142,8 @@ func on_health_changed():
 	
 	if is_local_player:
 		GameEvents.emit_player_damaged()
-		$HitRandomStreamPlayer.play_random()
+		if hit_sounds.size() > 0:
+			AudioManager.play_sfx_random(hit_sounds, global_position)
 
 func on_player_died():
 	if is_local_player:

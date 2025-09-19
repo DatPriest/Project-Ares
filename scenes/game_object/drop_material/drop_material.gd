@@ -1,5 +1,7 @@
 extends Node2D
 
+@export var pickup_sounds: Array[AudioStream] = []
+
 @onready var collision_shape_2d = $Area2D/CollisionShape2D
 @onready var sprite_2d = $Sprite2D
 
@@ -47,4 +49,5 @@ func on_area_entered(other_area: Area2D):
 	tween.tween_property(sprite_2d, "scale", Vector2.ZERO, .05).set_delay(.45)
 	tween.chain()
 	tween.tween_callback(collect)
-	$RandomStreamPlayer2DComponent.play_random()
+	if pickup_sounds.size() > 0:
+		AudioManager.play_sfx_random(pickup_sounds, global_position)

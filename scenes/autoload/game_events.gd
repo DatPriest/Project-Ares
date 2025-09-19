@@ -30,6 +30,11 @@ signal ability_spawn_requested(ability_scene: PackedScene, position: Vector2, da
 signal entities_layer_ready(entities_layer: Node)
 signal foreground_layer_ready(foreground_layer: Node)
 
+# Weapon system events
+signal weapon_instance_created(weapon_instance: WeaponInstance)
+signal weapon_instance_upgraded(weapon_instance: WeaponInstance, new_level: int)
+signal weapon_rarity_discovered(rarity: WeaponRarity)
+
 # Multiplayer and Steam events
 signal lobbies_found(lobby_list: Array)
 signal player_spawned(player_data: Dictionary)
@@ -96,6 +101,16 @@ func emit_boss_special_attack_started(boss_data: EnemyData, attack_name: String)
 
 func emit_boss_health_changed(boss_data: EnemyData, current_health: float, max_health: float):
 	boss_health_changed.emit(boss_data, current_health, max_health)
+
+# Weapon system event emitters
+func emit_weapon_instance_created(weapon_instance: WeaponInstance):
+	weapon_instance_created.emit(weapon_instance)
+
+func emit_weapon_instance_upgraded(weapon_instance: WeaponInstance, new_level: int):
+	weapon_instance_upgraded.emit(weapon_instance, new_level)
+
+func emit_weapon_rarity_discovered(rarity: WeaponRarity):
+	weapon_rarity_discovered.emit(rarity)
 
 # Multiplayer event emitters
 func emit_lobbies_found(lobby_list: Array):

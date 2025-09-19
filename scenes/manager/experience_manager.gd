@@ -5,15 +5,15 @@ signal level_up(new_level: int)
 
 const TARGET_EXPERIENCE_GROWTH = 5
 
-var current_experience = 0
-var current_level = 1
-var target_experience = 1
+var current_experience: float = 0
+var current_level: int = 1
+var target_experience: float = 1
 
-func _ready():
+func _ready() -> void:
 	GameEvents.experience_vial_collected.connect(on_experience_vial_collected)
 	
 	
-func increment_experience(number: float):
+func increment_experience(number: float) -> void:
 	current_experience = min(current_experience + number, target_experience)
 	experience_updated.emit(current_experience, target_experience)
 	if current_experience == target_experience:
@@ -24,8 +24,8 @@ func increment_experience(number: float):
 		level_up.emit(current_level)
 		
 
-func on_experience_vial_collected(number: float):
+func on_experience_vial_collected(number: float) -> void:
 	increment_experience(number)
 
-func on_kill(number: float):
+func on_kill(number: float) -> void:
 	increment_experience(number)

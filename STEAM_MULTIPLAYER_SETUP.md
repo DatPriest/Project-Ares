@@ -19,7 +19,7 @@ The game now supports up to 16 players using Steam networking with peer-to-peer 
 ## Requirements
 
 ### For Production (Steam Release)
-1. **GodotSteam Plugin**: Install the GodotSteam plugin for Godot 4.x
+1. **GodotSteam Plugin**: Install the GodotSteam plugin for Godot 4.5
 2. **Steam SDK**: The Steam SDK must be properly integrated
 3. **App ID**: Configure your Steam App ID in `SteamMultiplayer.steam_app_id`
 

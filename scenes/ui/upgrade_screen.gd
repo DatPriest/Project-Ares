@@ -6,10 +6,10 @@ signal upgrade_selected(upgrade)
 @onready var card_container: HBoxContainer = $%CardContainer
 @onready var animation_player = $AnimationPlayer
 
-func _ready():
+func _ready() -> void:
 	get_tree().paused = true
 
-func set_ability_upgrades(upgrades: Array[AbilityUpgrade]):
+func set_ability_upgrades(upgrades: Array[AbilityUpgrade]) -> void:
 	if upgrades.size() == 0:
 		push_warning("UpgradeScreen: No upgrades provided, closing screen")
 		_close_screen()
@@ -28,10 +28,11 @@ func set_ability_upgrades(upgrades: Array[AbilityUpgrade]):
 		card_instance.selected.connect(on_upgrade_selected.bind(upgrade))
 		delay += .4
 
-func _close_screen():
+func _close_screen() -> void:
 	get_tree().paused = false
 	queue_free()
-func on_upgrade_selected(upgrade: AbilityUpgrade):
+
+func on_upgrade_selected(upgrade: AbilityUpgrade) -> void:
 	upgrade_selected.emit(upgrade)
 	animation_player.play("out")
 	await animation_player.animation_finished

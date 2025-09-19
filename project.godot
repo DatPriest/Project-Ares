@@ -14,7 +14,7 @@ config/name="Project: Ares"
 run/main_scene="res://scenes/ui/main_menu/main_menu.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="Project_Ares"
-config/features=PackedStringArray("4.5", "C#", "Forward Plus")
+config/features=PackedStringArray("4.5", "Forward Plus")
 boot_splash/bg_color=Color(0.247059, 0.14902, 0.192157, 1)
 boot_splash/image="res://icon.png"
 boot_splash/fullsize=false
@@ -47,9 +47,6 @@ window/stretch/mode="viewport"
 window/size/mode.debug=0
 window/size/mode.release=4
 
-[dotnet]
-
-project/assembly_name="data"
 
 [editor]
 

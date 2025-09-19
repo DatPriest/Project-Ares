@@ -97,7 +97,7 @@ Du möchtest bei der Entwicklung helfen? Großartig\!
     ```bash
     git clone https://github.com/DEIN_BENUTZERNAME/project-ares.git
     ```
-2.  **Öffne das Projekt** in der Godot Engine (Version 4.2 oder neuer).
+2.  **Öffne das Projekt** in der Godot Engine (Version 4.5 oder neuer).
 3.  **Lese die Anweisungen für Mitwirkende:** Bevor du Code schreibst, wirf einen Blick in unsere `.github/copilot-instructions.md`, um dich mit unseren Code-Standards und der Projektarchitektur vertraut zu machen.
 4.  **KI-Unterstützung einrichten (optional):** Für erweiterte Entwicklungsunterstützung mit KI-Agenten, siehe `agents.md` und führe `.context7/init.sh` aus.
 

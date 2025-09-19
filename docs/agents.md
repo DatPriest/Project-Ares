@@ -18,6 +18,8 @@ Project Ares uses AI agents and Model Context Protocol (MCP) servers to enhance 
 - Scene structure optimization
 - Signal and event system guidance
 - Performance optimization for 2D games
+- Enhanced 2D physics system optimization (Godot 4.5)
+- Improved GDScript performance analysis and recommendations
 
 **Context**: Uses project-specific patterns and conventions defined in `.github/copilot-instructions.md`
 

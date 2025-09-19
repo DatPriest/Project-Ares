@@ -1,0 +1,7 @@
+[gd_resource type="AbilityUpgrade" format=3 uid="uid://c2xl8vrw7nq9m"]
+
+[resource]
+id = "magic_resistance"
+max_quantity = 3
+name = "Arcane Ward"
+description = "Increases Magic Resistance by 12%. Mystical protection against spells!"

@@ -1,0 +1,7 @@
+[gd_resource type="AbilityUpgrade" format=3 uid="uid://d4nyx3v8mmq1h"]
+
+[resource]
+id = "experience_boost"
+max_quantity = 3
+name = "Scholar's Mind"
+description = "Increases experience gain by 15%. Knowledge is power!"

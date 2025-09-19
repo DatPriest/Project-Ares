@@ -10,12 +10,16 @@ extends CharacterBody2D
 @onready var animation_player = $AnimationPlayer
 @onready var visuals = $Visuals
 @onready var velocity_component = $VelocityComponent
+@onready var character_stats_component = $CharacterStatsComponent
 
 var number_colliding_bodies = 0
 var base_speed = 0
 
 
 func _ready():
+	# Add player to group for easy access by managers
+	add_to_group("player")
+	
 	base_speed = velocity_component.max_speed
 	$CollisionArea2D.body_entered.connect(on_body_entered)
 	$CollisionArea2D.body_exited.connect(on_body_exited)
@@ -26,6 +30,10 @@ func _ready():
 	GameEvents.ability_upgrade_added.connect(on_ability_upgrade_added)
 	GameEvents.resource_collected.connect(on_resource_collected)
 	update_health_display()
+	
+	# Initialize character stats integration
+	if character_stats_component:
+		character_stats_component.stat_changed.connect(_on_character_stat_changed)
 
 func _process(delta):
 	var movement_vector = get_movement_vector()
@@ -84,7 +92,11 @@ func on_ability_upgrade_added(ability_upgrade: AbilityUpgrade, current_upgrades:
 		var ability = ability_upgrade as Ability
 		abilities.add_child(ability.ability_controller_scene.instantiate())
 	elif ability_upgrade.id == "player_speed":
+		# Update both legacy system and new character stats
 		velocity_component.max_speed = base_speed + (base_speed * current_upgrades["player_speed"]["quantity"] * .1)
+		if character_stats_component:
+			var speed_bonus = current_upgrades["player_speed"]["quantity"] * 10.0  # 10% per level
+			character_stats_component.modify_stat(CharacterStat.StatType.SPEED, speed_bonus, true, false)
 
 func on_resource_collected(resource: DropResource):
 	print(resource.title)
@@ -99,3 +111,23 @@ func on_area_entered(area: Area2D):
 func on_area_exited(area: Area2D):
 	# Projectiles don't need exit handling since they deal immediate damage
 	pass
+
+func _on_character_stat_changed(stat: CharacterStat) -> void:
+	"""Handle character stat changes and apply them to relevant systems"""
+	if not character_stats_component:
+		return
+	
+	match stat.stat_type:
+		CharacterStat.StatType.SPEED:
+			# Update velocity component with new speed multiplier
+			var speed_multiplier = character_stats_component.get_speed_multiplier()
+			velocity_component.max_speed = base_speed * speed_multiplier
+		CharacterStat.StatType.HEALTH:
+			# Update health component if we have a health bonus
+			var health_bonus = character_stats_component.get_health_bonus()
+			if health_component.has_method("add_max_health_bonus"):
+				health_component.add_max_health_bonus(health_bonus)
+
+func get_character_stats_component() -> CharacterStatsComponent:
+	"""Get the character stats component for external access"""
+	return character_stats_component

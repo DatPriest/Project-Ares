@@ -1,0 +1,7 @@
+[gd_resource type="AbilityUpgrade" format=3 uid="uid://bxpqv3h4m8r7n"]
+
+[resource]
+id = "pickup_magnet"
+max_quantity = 3
+name = "Magnetic Collection"
+description = "Increases pickup range by 30 pixels. Draw items to you from afar!"

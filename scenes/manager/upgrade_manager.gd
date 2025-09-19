@@ -55,6 +55,16 @@ var upgrade_team_buff_aura = preload("res://resources/upgrades/multiplayer/team_
 var upgrade_shared_experience = preload("res://resources/upgrades/multiplayer/shared_experience.tres")
 var upgrade_team_shield = preload("res://resources/upgrades/multiplayer/team_shield.tres")
 
+# Character stat upgrades
+var upgrade_health_boost = preload("res://resources/upgrades/character_stats/health_boost.tres")
+var upgrade_lucky_charm = preload("res://resources/upgrades/character_stats/lucky_charm.tres")
+var upgrade_experience_boost = preload("res://resources/upgrades/character_stats/experience_boost.tres")
+var upgrade_crit_chance_boost = preload("res://resources/upgrades/character_stats/crit_chance_boost.tres")
+var upgrade_armor_training = preload("res://resources/upgrades/character_stats/armor_training.tres")
+var upgrade_magic_resistance = preload("res://resources/upgrades/character_stats/magic_resistance.tres")
+var upgrade_stamina_boost = preload("res://resources/upgrades/character_stats/stamina_boost.tres")
+var upgrade_pickup_magnet = preload("res://resources/upgrades/character_stats/pickup_magnet.tres")
+
 func _ready():
 	upgrade_pool.add_item(upgrade_axe, 10)
 	upgrade_pool.add_item(upgrade_sword_rate, 10)
@@ -66,6 +76,16 @@ func _ready():
 	upgrade_pool.add_item(upgrade_bow, 10)
 	upgrade_pool.add_item(upgrade_magic_staff, 10)
 	upgrade_pool.add_item(upgrade_shield, 10)
+	
+	# Add character stat upgrades to pool
+	upgrade_pool.add_item(upgrade_health_boost, 8)
+	upgrade_pool.add_item(upgrade_lucky_charm, 6)
+	upgrade_pool.add_item(upgrade_experience_boost, 7)
+	upgrade_pool.add_item(upgrade_crit_chance_boost, 8)
+	upgrade_pool.add_item(upgrade_armor_training, 7)
+	upgrade_pool.add_item(upgrade_magic_resistance, 5)
+	upgrade_pool.add_item(upgrade_stamina_boost, 7)
+	upgrade_pool.add_item(upgrade_pickup_magnet, 6)
 	
 	if experience_manager == null:
 		push_error("UpgradeManager: experience_manager is null, level-up upgrades will not work")
@@ -156,9 +176,40 @@ func apply_upgrade(upgrade: AbilityUpgrade):
 		var current_quantity = current_upgrades[upgrade.id]["quantity"]
 		if current_quantity == upgrade.max_quantity:
 			upgrade_pool.remove_item(upgrade)
+	
+	# Apply character stat upgrades
+	_apply_character_stat_upgrade(upgrade)
 			
 	update_upgrade_pool(upgrade)
 	GameEvents.emit_ability_upgrade_added(upgrade, current_upgrades)
+
+func _apply_character_stat_upgrade(upgrade: AbilityUpgrade) -> void:
+	"""Apply character stat modifications based on upgrade type"""
+	var player = get_tree().get_first_node_in_group("player")
+	if not player or not player.has_method("get_character_stats_component"):
+		return
+	
+	var stats_component = player.get_character_stats_component()
+	if not stats_component:
+		return
+	
+	match upgrade.id:
+		"health_boost":
+			stats_component.modify_stat(CharacterStat.StatType.HEALTH, 25.0)
+		"lucky_charm":
+			stats_component.modify_stat(CharacterStat.StatType.LUCK, 10.0)
+		"experience_boost":
+			stats_component.modify_stat(CharacterStat.StatType.EXPERIENCE_GAIN, 15.0)
+		"crit_chance_boost":
+			stats_component.modify_stat(CharacterStat.StatType.CRITICAL_CHANCE, 8.0)
+		"armor_training":
+			stats_component.modify_stat(CharacterStat.StatType.ARMOR_RATING, 15.0)
+		"magic_resistance":
+			stats_component.modify_stat(CharacterStat.StatType.MAGIC_RESISTANCE, 12.0)
+		"stamina_boost":
+			stats_component.modify_stat(CharacterStat.StatType.STAMINA, 20.0)
+		"pickup_magnet":
+			stats_component.modify_stat(CharacterStat.StatType.PICKUP_RANGE, 30.0)
 
 func on_upgrade_selected(upgrade: AbilityUpgrade):
 	apply_upgrade(upgrade)

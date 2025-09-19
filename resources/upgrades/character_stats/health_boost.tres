@@ -1,0 +1,7 @@
+[gd_resource type="AbilityUpgrade" format=3 uid="uid://dhh0wc8ltqb1l"]
+
+[resource]
+id = "health_boost"
+max_quantity = 5
+name = "Health Boost"
+description = "Increases maximum health by 25 points. Survivability is key!"

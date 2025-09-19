@@ -1,0 +1,7 @@
+[gd_resource type="AbilityUpgrade" format=3 uid="uid://b8m4nx7pwq2st"]
+
+[resource]
+id = "armor_training"
+max_quantity = 4
+name = "Armor Training"
+description = "Increases Armor Rating by 15 points. Reduce incoming damage!"

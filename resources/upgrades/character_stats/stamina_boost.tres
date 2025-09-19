@@ -1,0 +1,7 @@
+[gd_resource type="AbilityUpgrade" format=3 uid="uid://dnpp5w2v8gx4l"]
+
+[resource]
+id = "stamina_boost"
+max_quantity = 4
+name = "Enhanced Stamina"
+description = "Increases Stamina by 20 points. More energy for extended battles!"

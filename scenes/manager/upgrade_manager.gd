@@ -60,6 +60,10 @@ var upgrade_health_boost = preload("res://resources/upgrades/character_stats/hea
 var upgrade_lucky_charm = preload("res://resources/upgrades/character_stats/lucky_charm.tres")
 var upgrade_experience_boost = preload("res://resources/upgrades/character_stats/experience_boost.tres")
 var upgrade_crit_chance_boost = preload("res://resources/upgrades/character_stats/crit_chance_boost.tres")
+var upgrade_armor_training = preload("res://resources/upgrades/character_stats/armor_training.tres")
+var upgrade_magic_resistance = preload("res://resources/upgrades/character_stats/magic_resistance.tres")
+var upgrade_stamina_boost = preload("res://resources/upgrades/character_stats/stamina_boost.tres")
+var upgrade_pickup_magnet = preload("res://resources/upgrades/character_stats/pickup_magnet.tres")
 
 func _ready():
 	upgrade_pool.add_item(upgrade_axe, 10)
@@ -78,6 +82,10 @@ func _ready():
 	upgrade_pool.add_item(upgrade_lucky_charm, 6)
 	upgrade_pool.add_item(upgrade_experience_boost, 7)
 	upgrade_pool.add_item(upgrade_crit_chance_boost, 8)
+	upgrade_pool.add_item(upgrade_armor_training, 7)
+	upgrade_pool.add_item(upgrade_magic_resistance, 5)
+	upgrade_pool.add_item(upgrade_stamina_boost, 7)
+	upgrade_pool.add_item(upgrade_pickup_magnet, 6)
 	
 	if experience_manager == null:
 		push_error("UpgradeManager: experience_manager is null, level-up upgrades will not work")
@@ -194,6 +202,14 @@ func _apply_character_stat_upgrade(upgrade: AbilityUpgrade) -> void:
 			stats_component.modify_stat(CharacterStat.StatType.EXPERIENCE_GAIN, 15.0)
 		"crit_chance_boost":
 			stats_component.modify_stat(CharacterStat.StatType.CRITICAL_CHANCE, 8.0)
+		"armor_training":
+			stats_component.modify_stat(CharacterStat.StatType.ARMOR_RATING, 15.0)
+		"magic_resistance":
+			stats_component.modify_stat(CharacterStat.StatType.MAGIC_RESISTANCE, 12.0)
+		"stamina_boost":
+			stats_component.modify_stat(CharacterStat.StatType.STAMINA, 20.0)
+		"pickup_magnet":
+			stats_component.modify_stat(CharacterStat.StatType.PICKUP_RANGE, 30.0)
 
 func on_upgrade_selected(upgrade: AbilityUpgrade):
 	apply_upgrade(upgrade)

@@ -192,7 +192,7 @@ Context7 is configured to provide enhanced context awareness for:
   "project": {
     "name": "Project Ares",
     "type": "godot_game",
-    "version": "4.2",
+    "version": "4.5",
     "architecture": "component_based"
   },
   "contexts": [

@@ -11,7 +11,7 @@
     {
       "name": "godot_development",
       "description": "Godot Engine 4 specific development patterns",
-      "patterns": ["*.gd", "*.tscn", "*.tres", "*.cs"],
+      "patterns": ["*.gd", "*.tscn", "*.tres"],
       "priority": "high",
       "rules": [
         "enforce_static_typing",

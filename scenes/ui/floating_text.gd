@@ -26,4 +26,3 @@ func start(text: String):
 	.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	scale_tween.tween_property(self, "scale", Vector2.ONE, .15) \
 	.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
-

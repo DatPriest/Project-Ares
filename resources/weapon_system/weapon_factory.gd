@@ -37,7 +37,7 @@ func _create_default_rarity_resources() -> void:
 		{"id": "epic", "name": "Epic", "grade": 4, "color": Color.PURPLE, "weight": 30},
 		{"id": "legendary", "name": "Legendary", "grade": 5, "color": Color.ORANGE, "weight": 20},
 		{"id": "mythic", "name": "Mythic", "grade": 6, "color": Color.RED, "weight": 15},
-		{"id": "divine", "name": "Divine", "grade": 7, "color": Color.GOLD, "weight": 10},
+		{"id": "divine", "name": "Divine", "grade": 7, "color": Color(1.0, 0.843, 0.0), "weight": 10},
 		{"id": "cosmic", "name": "Cosmic", "grade": 8, "color": Color.CYAN, "weight": 7},
 		{"id": "transcendent", "name": "Transcendent", "grade": 9, "color": Color.MAGENTA, "weight": 5},
 		{"id": "omnipotent", "name": "Omnipotent", "grade": 10, "color": Color.YELLOW, "weight": 2}

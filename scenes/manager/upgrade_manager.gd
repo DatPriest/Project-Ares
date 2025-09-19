@@ -2,6 +2,7 @@ extends Node
 
 @export var experience_manager: Node
 @export var upgrade_screen_scene: PackedScene
+@export var weapon_system_manager: WeaponSystemManager
 
 var current_upgrades = {
 }

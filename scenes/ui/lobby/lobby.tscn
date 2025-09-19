@@ -1,0 +1,85 @@
+[gd_scene load_steps=3 format=3 uid="uid://d4p13jjn05kqy"]
+
+[ext_resource type="Script" path="res://scenes/ui/lobby/lobby.gd" id="1_lobby"]
+[ext_resource type="PackedScene" uid="uid://by5xb5rkkyp5i" path="res://scenes/ui/sound_button.tscn" id="2_sound_button"]
+
+[node name="Lobby" type="CanvasLayer"]
+script = ExtResource("1_lobby")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 8
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"BlueOutlineLabel"
+theme_override_font_sizes/font_size = 24
+text = "Game Lobby"
+horizontal_alignment = 1
+
+[node name="LobbyInfoLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Lobby ID: 12345
+Players: 1/16"
+horizontal_alignment = 1
+
+[node name="StatusLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Waiting for host to start the game..."
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="PlayerListContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PlayerListLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/PlayerListContainer"]
+layout_mode = 2
+text = "Players in Lobby:"
+
+[node name="PlayerList" type="ItemList" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/PlayerListContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+custom_minimum_size = Vector2(300, 200)
+
+[node name="ButtonContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="StartButton" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/ButtonContainer" instance=ExtResource("2_sound_button")]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Start Game"
+
+[node name="LeaveButton" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/ButtonContainer" instance=ExtResource("2_sound_button")]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Leave Lobby"

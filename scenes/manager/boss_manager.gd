@@ -9,6 +9,7 @@ class_name BossManager
 
 var spawned_bosses: Array[float] = []
 var current_boss_count: int = 0
+var cached_player_position: Vector2 = Vector2.ZERO
 
 func _ready():
 	# Find arena time manager
@@ -20,6 +21,12 @@ func _ready():
 	# Connect to boss defeat events to track boss count
 	GameEvents.boss_defeated.connect(_on_boss_defeated)
 	GameEvents.boss_spawned.connect(_on_boss_spawned)
+	
+	# Connect to player position updates for cached access
+	GameEvents.player_position_updated.connect(on_player_position_updated)
+
+func on_player_position_updated(player_position: Vector2):
+	cached_player_position = player_position
 
 func _process(_delta):
 	if arena_time_manager == null:
@@ -70,8 +77,8 @@ func _spawn_boss_at_time(spawn_time: float):
 	print("BossManager: Spawning boss '", boss_data.name, "' at time ", spawn_time)
 
 func _get_boss_spawn_position() -> Vector2:
-	var player = get_tree().get_first_node_in_group("player") as Node2D
-	if player == null:
+	# Use cached player position instead of expensive tree lookup
+	if cached_player_position == Vector2.ZERO:
 		return Vector2.ZERO
 	
 	# Spawn boss further away than regular enemies
@@ -81,10 +88,10 @@ func _get_boss_spawn_position() -> Vector2:
 	
 	# Try to find a clear spawn position
 	for i in 4:
-		spawn_position = player.global_position + (random_direction * boss_spawn_radius)
+		spawn_position = cached_player_position + (random_direction * boss_spawn_radius)
 		var additional_check_offset = random_direction * 30
 		
-		var query_parameters = PhysicsRayQueryParameters2D.create(player.global_position, spawn_position + additional_check_offset, 1)
+		var query_parameters = PhysicsRayQueryParameters2D.create(cached_player_position, spawn_position + additional_check_offset, 1)
 		var result = get_tree().root.world_2d.direct_space_state.intersect_ray(query_parameters)
 		
 		if result.is_empty():

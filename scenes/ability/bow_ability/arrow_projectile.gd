@@ -17,7 +17,7 @@ func _ready() -> void:
 	if hitbox_component:
 		hitbox_component.hit_hurtbox.connect(_on_hit_hurtbox)
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	var velocity = direction * speed * delta
 	global_position += velocity
 	traveled_distance += velocity.length()

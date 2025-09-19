@@ -9,6 +9,7 @@ var base_damage = 5
 var additional_damage_percent = 1
 var base_wait_time 
 var cached_player_position = Vector2.ZERO
+var cached_enemies: Array[Node2D] = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -16,16 +17,20 @@ func _ready():
 	timer.timeout.connect(on_timer_timeout)
 	GameEvents.ability_upgrade_added.connect(on_ability_upgrade_added)
 	GameEvents.player_position_updated.connect(on_player_position_updated)
+	GameEvents.enemies_near_player_updated.connect(on_enemies_near_player_updated)
 
 func on_player_position_updated(player_position: Vector2):
 	cached_player_position = player_position
+
+func on_enemies_near_player_updated(enemies: Array[Node2D], player_position: Vector2):
+	cached_enemies = enemies
 
 func on_timer_timeout():
 	if cached_player_position == Vector2.ZERO:
 		return
 		
-	var enemies = get_tree().get_nodes_in_group("enemy")
-	enemies = enemies.filter(func(enemy: Node2D): 
+	# Use cached enemy list instead of expensive tree lookup
+	var enemies = cached_enemies.filter(func(enemy: Node2D): 
 		return enemy.global_position.distance_squared_to(cached_player_position) < pow(MAX_RANGE, 2)
 	)
 	

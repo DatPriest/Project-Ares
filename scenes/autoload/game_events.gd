@@ -16,6 +16,9 @@ signal boss_health_changed(boss_data: EnemyData, current_health: float, max_heal
 # Player position and movement events
 signal player_position_updated(player_position: Vector2)
 
+# Enemy tracking events (for performance optimization)
+signal enemies_near_player_updated(enemies: Array[Node2D], player_position: Vector2)
+
 # Entity spawning and management events  
 signal entity_spawn_requested(entity_scene: PackedScene, spawn_position: Vector2)
 signal projectile_spawn_requested(projectile_scene: PackedScene, spawn_position: Vector2, velocity: Vector2)
@@ -58,6 +61,10 @@ func emit_player_damaged():
 # Player position and movement event emitters
 func emit_player_position_updated(player_position: Vector2):
 	player_position_updated.emit(player_position)
+
+# Enemy tracking event emitters (for performance optimization)
+func emit_enemies_near_player_updated(enemies: Array[Node2D], player_position: Vector2):
+	enemies_near_player_updated.emit(enemies, player_position)
 
 # Entity spawning and management event emitters
 func emit_entity_spawn_requested(entity_scene: PackedScene, spawn_position: Vector2):

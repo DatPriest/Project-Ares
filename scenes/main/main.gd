@@ -9,6 +9,12 @@ var floating_text_scene = preload("res://scenes/ui/floating_text.tscn")
 @onready var entities_layer: Node = $%EntitiesLayer
 @onready var foreground_layer: Node = $%ForegroundLayer
 
+# Enemy tracking optimization
+var enemy_tracking_timer: Timer
+var cached_enemies: Array[Node2D] = []
+var cached_player_position: Vector2 = Vector2.ZERO
+const ENEMY_UPDATE_INTERVAL: float = 0.1  # Update every 100ms instead of every frame
+
 func _ready():
 	$%Player.health_component.died.connect(on_player_died)
 	
@@ -23,6 +29,31 @@ func _ready():
 	GameEvents.floating_text_requested.connect(on_floating_text_requested)
 	GameEvents.effect_spawn_requested.connect(on_effect_spawn_requested)
 	GameEvents.ability_spawn_requested.connect(on_ability_spawn_requested)
+	
+	# Set up enemy tracking optimization
+	_setup_enemy_tracking()
+	
+	# Connect to player position updates
+	GameEvents.player_position_updated.connect(on_player_position_updated)
+
+func _setup_enemy_tracking():
+	"""Initialize performance-optimized enemy tracking system"""
+	enemy_tracking_timer = Timer.new()
+	enemy_tracking_timer.wait_time = ENEMY_UPDATE_INTERVAL
+	enemy_tracking_timer.timeout.connect(_update_enemy_cache)
+	enemy_tracking_timer.autostart = true
+	add_child(enemy_tracking_timer)
+
+func on_player_position_updated(player_position: Vector2):
+	cached_player_position = player_position
+
+func _update_enemy_cache():
+	"""Update cached enemy list at reduced frequency to improve performance"""
+	cached_enemies = get_tree().get_nodes_in_group("enemy")
+	# Filter out invalid nodes
+	cached_enemies = cached_enemies.filter(func(enemy): return is_instance_valid(enemy) and enemy is Node2D)
+	# Broadcast the updated enemy list
+	GameEvents.emit_enemies_near_player_updated(cached_enemies, cached_player_position)
 	
 	
 func _unhandled_input(event):

@@ -2,7 +2,7 @@
   "project": {
     "name": "Project Ares",
     "type": "godot_game",
-    "version": "4.2",
+    "version": "4.5",
     "architecture": "component_based",
     "genre": "survivor_roguelite",
     "language": "gdscript"

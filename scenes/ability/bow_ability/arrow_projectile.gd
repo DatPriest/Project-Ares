@@ -41,7 +41,9 @@ func _on_hit_hurtbox(hurtbox_component: HurtboxComponent, attack: Attack) -> voi
 	if is_explosive and explosion_scene != null:
 		var explosion = explosion_scene.instantiate()
 		explosion.global_position = global_position
-		get_tree().current_scene.add_child(explosion)
+		# Add explosion to main scene tree through proper parent reference
+		var main_scene = get_tree().root.get_child(-1)
+		main_scene.add_child(explosion)
 	
 	# Arrow disappears after hitting a target
 	queue_free()

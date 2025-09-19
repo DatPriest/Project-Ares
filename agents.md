@@ -55,7 +55,7 @@ Provides context-aware assistance for Godot development:
   "command": "godot-mcp-server",
   "args": ["--project-path", "/home/runner/work/Project-Ares/Project-Ares"],
   "env": {
-    "GODOT_VERSION": "4.2",
+    "GODOT_VERSION": "4.5",
     "PROJECT_TYPE": "2d_survivor"
   }
 }

@@ -75,8 +75,9 @@ func _fire_arrow_at_enemy(enemy: Node2D) -> void:
 		var velocity = direction * arrow_speed
 		GameEvents.emit_projectile_spawn_requested(arrow_projectile_scene, cached_player_position, velocity)
 	else:
-		# Fallback: add directly to scene
-		get_tree().current_scene.add_child(arrow)
+		# Fallback: add to main scene tree through proper parent reference
+		var main_scene = get_tree().root.get_child(-1)
+		main_scene.add_child(arrow)
 
 func on_ability_upgrade_added(upgrade: AbilityUpgrade, current_upgrades: Dictionary) -> void:
 	if upgrade.id == "bow_damage":

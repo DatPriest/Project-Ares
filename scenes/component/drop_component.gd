@@ -4,10 +4,10 @@ extends Node
 @export var resources: Array[DropResource]
 @export var material_scene: PackedScene
 
-func _ready(): 
+func _ready() -> void: 
 	(health_component as HealthComponent).died.connect(on_died)
 
-func on_died():
+func on_died() -> void:
 	var resource: DropResource = resources.pick_random()
 	if resource == null:
 		return

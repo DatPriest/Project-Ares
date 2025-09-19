@@ -63,7 +63,9 @@ func _spawn_dummy_target() -> void:
 		foreground_layer = Node2D.new()
 		foreground_layer.name = "ForegroundLayer"
 		foreground_layer.add_to_group("foreground_layer")
-		get_tree().current_scene.add_child(foreground_layer)
+		# Add to main scene tree through proper parent reference
+		var main_scene = get_tree().root.get_child(-1)
+		main_scene.add_child(foreground_layer)
 	
 	# Instantiate dummy target
 	current_dummy_target = dummy_target_scene.instantiate() as DummyTarget

@@ -1,0 +1,7 @@
+[gd_resource type="AbilityUpgrade" format=3 uid="uid://c7hy8g2pxnw5k"]
+
+[resource]
+id = "lucky_charm"
+max_quantity = 3
+name = "Lucky Charm"
+description = "Increases Luck by 10 points. Better drops and critical hits await!"

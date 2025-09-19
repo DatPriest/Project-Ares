@@ -1,0 +1,7 @@
+[gd_resource type="AbilityUpgrade" format=3 uid="uid://dkm3ws7p6x9lj"]
+
+[resource]
+id = "crit_chance_boost"
+max_quantity = 4
+name = "Precision Training"
+description = "Increases critical hit chance by 8%. Strike true, strike hard!"

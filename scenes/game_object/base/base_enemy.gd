@@ -1,9 +1,10 @@
 extends CharacterBody2D
 class_name BaseEnemy
 
+@export var hit_sounds: Array[AudioStream] = []
+
 @onready var visuals = $Visuals
 @onready var velocity_component: VelocityComponent = $VelocityComponent
-@onready var hit_random_audio_player_component: AudioStreamPlayer2D = $HitRandomAudioPlayerComponent
 @onready var hurt_box_component: HurtboxComponent = $HurtBoxComponent
 @onready var enemy_type: String = "BaseEnemy"
 @onready var enemy_id: String = "BaseEnemy"
@@ -23,4 +24,5 @@ func _ready():
 	hurt_box_component.hit.connect(on_hit)
 
 func on_hit():
-	hit_random_audio_player_component.play_random()
+	if hit_sounds.size() > 0:
+		AudioManager.play_sfx_random(hit_sounds, global_position)

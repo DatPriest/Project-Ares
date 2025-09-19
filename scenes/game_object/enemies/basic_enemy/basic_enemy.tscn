@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://xqnkguyw81is"]
+[gd_scene load_steps=24 format=3 uid="uid://xqnkguyw81is"]
 
 [ext_resource type="Script" path="res://scenes/game_object/enemies/basic_enemy/basic_enemy.gd" id="1_x2xqe"]
 [ext_resource type="PackedScene" uid="uid://dvho7o7f7skqi" path="res://scenes/component/health_component.tscn" id="2_cf3t7"]
@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://4dmmcb4gf27p" path="res://scenes/component/hit_flash_component.tscn" id="5_bffej"]
 [ext_resource type="Shader" path="res://scenes/component/hit_flash_component.gdshader" id="6_vu5h7"]
 [ext_resource type="PackedScene" uid="uid://c52bce7ufitux" path="res://scenes/component/death_component.tscn" id="7_rp3p8"]
-[ext_resource type="PackedScene" uid="uid://ie88omkcfji6" path="res://scenes/component/random_stream_player_2d_component.tscn" id="8_hpa7p"]
 [ext_resource type="AudioStream" uid="uid://b0mkcnihvr5rt" path="res://assets/audio/entity_sounds/footstep_carpet_000.ogg" id="9_skcqp"]
 [ext_resource type="AudioStream" uid="uid://ucg011qjaw41" path="res://assets/audio/entity_sounds/footstep_carpet_001.ogg" id="10_spej2"]
 [ext_resource type="AudioStream" uid="uid://b2oc3yk4balr5" path="res://assets/audio/entity_sounds/footstep_carpet_002.ogg" id="11_nk4g2"]
@@ -122,6 +121,7 @@ collision_layer = 8
 collision_mask = 9
 motion_mode = 1
 script = ExtResource("1_x2xqe")
+hit_sounds = Array[AudioStream]([ExtResource("9_skcqp"), ExtResource("10_spej2"), ExtResource("11_nk4g2"), ExtResource("12_m8on4"), ExtResource("13_2p2jt")])
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -131,9 +131,7 @@ autoplay = "walk"
 
 [node name="VelocityComponent" parent="." instance=ExtResource("4_c8r70")]
 
-[node name="HitRandomAudioPlayerComponent" parent="." instance=ExtResource("8_hpa7p")]
-autoplay = true
-streams = Array[AudioStream]([ExtResource("9_skcqp"), ExtResource("10_spej2"), ExtResource("11_nk4g2"), ExtResource("12_m8on4"), ExtResource("13_2p2jt")])
+
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_cf3t7")]
 

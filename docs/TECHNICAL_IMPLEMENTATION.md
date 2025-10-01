@@ -8,6 +8,8 @@ This document contains comprehensive technical implementation guides for Project
 - [Performance Optimizations](#performance-optimizations)
 - [Steam Multiplayer Setup](#steam-multiplayer-setup)
 
+> **See Also:** [Implementation Overview](IMPLEMENTATION_OVERVIEW.md) - For comprehensive metrics, security features, validation mechanisms, and deliverables status
+
 ---
 
 # Enemy System Migration

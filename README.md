@@ -30,6 +30,7 @@ Detaillierte Dokumentation findest du im `docs/` Verzeichnis:
 
 - **[Game Design](docs/GAME_DESIGN.md)** - Weapon systems, upgrades, synergies, and progression mechanics
 - **[Technical Implementation](docs/TECHNICAL_IMPLEMENTATION.md)** - Enemy migration, component integration, performance optimizations, and multiplayer setup  
+- **[Implementation Overview](docs/IMPLEMENTATION_OVERVIEW.md)** - Project metrics, security features, validation mechanisms, and deliverables status
 - **[AI Agents](docs/agents.md)** - AI development assistance configuration and workflows
 
 ## 🤖 KI-Entwicklungsunterstützung
